@@ -7,8 +7,13 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "MLPNeuralNet.h"
 
-@interface MLPNeuralNetTests : XCTestCase
+@interface MLPNeuralNetTests : XCTestCase {
+    NSArray *ANDModelWeigths;
+    NSArray *ANDModelLayers;
+    MLPNeuralNet *ANDmodel;
+}
 
 @end
 
@@ -17,7 +22,9 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    ANDModelWeigths = [NSArray arrayWithObjects:@-30, @20, @20, nil];
+    ANDModelLayers = [NSArray arrayWithObjects:@2, @1, nil];
+    ANDmodel = [[MLPNeuralNet alloc] initWithLayersConfig:ANDModelLayers weights:ANDModelWeigths outputMode:MLPClassification];
 }
 
 - (void)tearDown
@@ -26,9 +33,37 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testImproperInitialization
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSArray *weigths = [NSArray arrayWithObjects:[NSArray array], @1, nil];
+    NSArray *layers = [NSArray arrayWithObjects:@2, @3, @1, nil];
+    XCTAssertThrowsSpecificNamed([[MLPNeuralNet alloc] initWithLayersConfig:layers weights:weigths outputMode:MLPClassification],
+                                 NSException,
+                                 @"MLPNeuralNet initializer");
+}
+
+- (void)testANDModelOneOne
+{
+    double assessment = [[ANDmodel predictByFeatureVector:@[@1, @1]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+}
+
+- (void)testANDModelOneZero
+{
+    double assessment = [[ANDmodel predictByFeatureVector:@[@1, @0]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+}
+
+- (void)testANDModelZeroOne
+{
+    double assessment = [[ANDmodel predictByFeatureVector:@[@0, @1]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+}
+
+- (void)testANDModelZeroZero
+{
+    double assessment = [[ANDmodel predictByFeatureVector:@[@0, @0]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
 }
 
 @end
