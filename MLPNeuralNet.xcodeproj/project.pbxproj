@@ -16,6 +16,7 @@
 		58215FCA17F313060075487A /* libMLPNeuralNet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FB217F313060075487A /* libMLPNeuralNet.a */; };
 		58215FD017F313060075487A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58215FCE17F313060075487A /* InfoPlist.strings */; };
 		58215FD217F313060075487A /* MLPNeuralNetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58215FD117F313060075487A /* MLPNeuralNetTests.m */; };
+		58215FF317F318480075487A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FF217F318480075487A /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		58215FCD17F313060075487A /* MLPNeuralNetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MLPNeuralNetTests-Info.plist"; sourceTree = "<group>"; };
 		58215FCF17F313060075487A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		58215FD117F313060075487A /* MLPNeuralNetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLPNeuralNetTests.m; sourceTree = "<group>"; };
+		58215FF217F318480075487A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58215FF317F318480075487A /* Accelerate.framework in Frameworks */,
 				58215FB617F313060075487A /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,6 +103,7 @@
 		58215FB417F313060075487A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				58215FF217F318480075487A /* Accelerate.framework */,
 				58215FB517F313060075487A /* Foundation.framework */,
 				58215FC317F313060075487A /* XCTest.framework */,
 				58215FC617F313060075487A /* UIKit.framework */,
