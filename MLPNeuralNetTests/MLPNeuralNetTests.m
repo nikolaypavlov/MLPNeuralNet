@@ -10,9 +10,17 @@
 #import "MLPNeuralNet.h"
 
 @interface MLPNeuralNetTests : XCTestCase {
-    NSArray *ANDModelWeigths;
-    NSArray *ANDModelLayers;
-    MLPNeuralNet *ANDmodel;
+    NSArray *weightsForANDModel;
+    NSArray *layersForANDModel;
+    MLPNeuralNet *modelOfAND;
+    
+    NSArray *weightsForORModel;
+    NSArray *layersForORModel;
+    MLPNeuralNet *modelOfOR;
+    
+    NSArray *weightsForXNORModel;
+    NSArray *layersForXNORModel;
+    MLPNeuralNet *modelOfXNOR;
 }
 
 @end
@@ -22,9 +30,17 @@
 - (void)setUp
 {
     [super setUp];
-    ANDModelWeigths = [NSArray arrayWithObjects:@-30, @20, @20, nil];
-    ANDModelLayers = [NSArray arrayWithObjects:@2, @1, nil];
-    ANDmodel = [[MLPNeuralNet alloc] initWithLayersConfig:ANDModelLayers weights:ANDModelWeigths outputMode:MLPClassification];
+    weightsForANDModel = [NSArray arrayWithObjects:@-30, @20, @20, nil];
+    layersForANDModel = [NSArray arrayWithObjects:@2, @1, nil];
+    modelOfAND = [[MLPNeuralNet alloc] initWithLayersConfig:layersForANDModel weights:weightsForANDModel outputMode:MLPClassification];
+    
+    weightsForORModel = [NSArray arrayWithObjects:@-10, @20, @20, nil];
+    layersForORModel = [NSArray arrayWithObjects:@2, @1, nil];
+    modelOfOR = [[MLPNeuralNet alloc] initWithLayersConfig:layersForORModel weights:weightsForORModel outputMode:MLPClassification];
+    
+    weightsForXNORModel = [NSArray arrayWithObjects:@-30, @20, @20, @10, @-20, @-20, @-10, @20, @20, nil];
+    layersForXNORModel = [NSArray arrayWithObjects:@2, @2, @1, nil];
+    modelOfXNOR = [[MLPNeuralNet alloc] initWithLayersConfig:layersForXNORModel weights:weightsForXNORModel outputMode:MLPClassification];
 }
 
 - (void)tearDown
@@ -42,28 +58,85 @@
                                  @"MLPNeuralNet initializer");
 }
 
-- (void)testANDModelOneOne
+#pragma mark - AND model tests
+
+- (void)testModelOfANDOneOne
 {
-    double assessment = [[ANDmodel predictByFeatureVector:@[@1, @1]] doubleValue];
+    double assessment = [[modelOfAND predictByFeatureVector:@[@1, @1]] doubleValue];
     XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
 }
 
-- (void)testANDModelOneZero
+- (void)testModelOfANDOneZero
 {
-    double assessment = [[ANDmodel predictByFeatureVector:@[@1, @0]] doubleValue];
+    double assessment = [[modelOfAND predictByFeatureVector:@[@1, @0]] doubleValue];
     XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
 }
 
-- (void)testANDModelZeroOne
+- (void)testModelOfANDZeroOne
 {
-    double assessment = [[ANDmodel predictByFeatureVector:@[@0, @1]] doubleValue];
+    double assessment = [[modelOfAND predictByFeatureVector:@[@0, @1]] doubleValue];
     XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
 }
 
-- (void)testANDModelZeroZero
+- (void)testModelOfANDZeroZero
 {
-    double assessment = [[ANDmodel predictByFeatureVector:@[@0, @0]] doubleValue];
+    double assessment = [[modelOfAND predictByFeatureVector:@[@0, @0]] doubleValue];
     XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
 }
+
+#pragma mark - OR model tests
+
+- (void)testModelOfOROneOne
+{
+    double assessment = [[modelOfOR predictByFeatureVector:@[@1, @1]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+}
+
+- (void)testModelOfOROneZero
+{
+    double assessment = [[modelOfOR predictByFeatureVector:@[@1, @0]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+}
+
+- (void)testModelOfORZeroOne
+{
+    double assessment = [[modelOfOR predictByFeatureVector:@[@0, @1]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+}
+
+- (void)testModelOfORZeroZero
+{
+    double assessment = [[modelOfOR predictByFeatureVector:@[@0, @0]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+}
+
+#pragma mark - XNOR model tests
+
+- (void)testModelOfXNOROneOne
+{
+    double assessment = [[modelOfXNOR predictByFeatureVector:@[@1, @1]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+}
+
+- (void)testModelOfXNOROneZero
+{
+    double assessment = [[modelOfXNOR predictByFeatureVector:@[@1, @0]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+}
+
+- (void)testModelOfXNORZeroOne
+{
+    double assessment = [[modelOfXNOR predictByFeatureVector:@[@0, @1]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+}
+
+- (void)testModelOfXNORZeroZero
+{
+    double assessment = [[modelOfXNOR predictByFeatureVector:@[@0, @0]] doubleValue];
+    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+}
+
+// TODO
+// Test that weight matrix conforms to network configuration
 
 @end
