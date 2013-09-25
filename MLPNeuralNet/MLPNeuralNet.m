@@ -58,8 +58,6 @@ typedef struct {
         _numberOfLayers = layersConfig.count;
         _neuronsInLayer = layersConfig;
         _outputMode = outputMode;
-//        NSLog(@"Network configuration %@", _neuronsInLayer);
-//        NSLog(@"Weights %@", weights);
         
         // Allocate buffers for the maximum possible vector size, there should be a place for bias unit also.
         unsigned maxVectorLength = [[layersConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
@@ -74,6 +72,7 @@ typedef struct {
         // Let's allocate resources for the wigth matrices and initialize them.
         // If network has X units in layer j, Y units in layer j+1, then weight matrix
         // for layer j will be of demension: Y x (X+1).
+        int crossLayerOffset = 0; // Offset between the weight matrices of different layers
         for (int j = 0; j < _numberOfLayers - 1; j++) { // Recall we don't need a matrix for the input layer
             layer[j].nrow = [_neuronsInLayer[j+BIAS_UNIT] unsignedIntegerValue];
             layer[j].ncol = [_neuronsInLayer[j] unsignedIntegerValue] + 1;
@@ -84,14 +83,22 @@ typedef struct {
             NSAssert(layer[j].weightMatrix != NULL, @"Out of memory for weight matrices");
             
             // Now let's initialize weigths
+            int totalOffset = 0;
             for (int row = 0; row < layer[j].nrow; row++) {
                 for (int col = 0; col < layer[j].ncol; col++) {
                     // Simulate the matrix using row-major ordering. Now matrix[offset] corresponds to M[row, col]
-                    int offset = row * layer[j].ncol + col;
-                    layer[j].weightMatrix[offset] = [weights[offset] doubleValue];
+                    int crossRowOffset = (col + row * layer[j].ncol); // Offset between matrix rows of the current layer
+                    totalOffset = crossRowOffset + crossLayerOffset;
+                    layer[j].weightMatrix[crossRowOffset] = [weights[totalOffset] doubleValue];
                 }
+//                NSLog(@"Matrix for layer %d [%f, %f, %f]", j,
+//                      layer[j].weightMatrix[row * layer[j].ncol + 0],
+//                      layer[j].weightMatrix[row * layer[j].ncol + 1],
+//                      layer[j].weightMatrix[row * layer[j].ncol + 2]);
             }
+            crossLayerOffset = totalOffset + 1; // Adjust offset to the next layer
         }
+        
     }
     return self;
 }
@@ -130,7 +137,7 @@ typedef struct {
         // Apply logistic activation function if needed: http://en.wikipedia.org/wiki/Logistic_function
         if (self.outputMode == MLPClassification) {
             for (int i = 0; i < layer[j].nrow; i++) {
-//                NSLog(@"feature %f", features[i+BIAS_UNIT]);
+                NSLog(@"feature %f", features[i+BIAS_UNIT]);
                 // Skip bias unit
                 features[i+BIAS_UNIT] = 1 / (1 + exp(-features[i+BIAS_UNIT])); // Maybe Taylor's theorem can be used to vectorize this?
             }
