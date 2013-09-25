@@ -409,6 +409,7 @@
 				58215FD717F313060075487A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		58215FD817F313060075487A /* Build configuration list for PBXNativeTarget "MLPNeuralNetTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +418,7 @@
 				58215FDA17F313060075487A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
