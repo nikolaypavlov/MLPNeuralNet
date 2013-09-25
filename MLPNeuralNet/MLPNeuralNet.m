@@ -8,7 +8,8 @@
 
 #import "MLPNeuralNet.h"
 
-#define BIAS 1.0
+#define BIAS_VALUE 1.0
+#define BIAS_UNIT 1
 
 typedef struct {
     NSUInteger nrow; // Number of rows
@@ -57,9 +58,11 @@ typedef struct {
         _numberOfLayers = layersConfig.count;
         _neuronsInLayer = layersConfig;
         _outputMode = outputMode;
+//        NSLog(@"Network configuration %@", _neuronsInLayer);
+//        NSLog(@"Weights %@", weights);
         
         // Allocate buffers for the maximum possible vector size, there should be a place for bias unit also.
-        unsigned maxVectorLength = [[layersConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + 1;
+        unsigned maxVectorLength = [[layersConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
         featureVector = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
         outputBuffer = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
         
@@ -72,8 +75,9 @@ typedef struct {
         // If network has X units in layer j, Y units in layer j+1, then weight matrix
         // for layer j will be of demension: Y x (X+1).
         for (int j = 0; j < _numberOfLayers - 1; j++) { // Recall we don't need a matrix for the input layer
-            layer[j].nrow = [[_neuronsInLayer objectAtIndex:j] unsignedIntegerValue];
-            layer[j].ncol = [[_neuronsInLayer objectAtIndex:j + 1] unsignedIntegerValue] + 1;
+            layer[j].nrow = [_neuronsInLayer[j+BIAS_UNIT] unsignedIntegerValue];
+            layer[j].ncol = [_neuronsInLayer[j] unsignedIntegerValue] + 1;
+//            NSLog(@"Matrix demension for layer %d: is [%d x %d]", j, layer[j].nrow, layer[j].ncol);
             
             // Allocate memory for the weight matrix of current layer.
             layer[j].weightMatrix = calloc(layer[j].nrow * layer[j].ncol, sizeof(double));
@@ -84,7 +88,7 @@ typedef struct {
                 for (int col = 0; col < layer[j].ncol; col++) {
                     // Simulate the matrix using row-major ordering. Now matrix[offset] corresponds to M[row, col]
                     int offset = row * layer[j].ncol + col;
-                    layer[j].weightMatrix[offset] = [[weights objectAtIndex:offset] doubleValue];
+                    layer[j].weightMatrix[offset] = [weights[offset] doubleValue];
                 }
             }
         }
@@ -120,13 +124,15 @@ typedef struct {
         vDSP_mmulD(layer[j].weightMatrix, 1, features, 1, &outputVector[1], 1, layer[j].nrow, 1, layer[j].ncol);
         
         // Insert bias unit at index 0 and overwrite old feature-vector with the new one
-        outputVector[0] = BIAS;
-        memcpy(features, outputVector, layer[j].nrow * sizeof(double));
+        outputVector[0] = BIAS_VALUE;
+        memcpy(features, outputVector, (layer[j].nrow + BIAS_UNIT) * sizeof(double));
         
         // Apply logistic activation function if needed: http://en.wikipedia.org/wiki/Logistic_function
         if (self.outputMode == MLPClassification) {
-            for (int i = 1; i < layer[j].nrow; i++) { // Skip bias unit
-                features[i] = 1 / (1 + exp(-features[i])); // Maybe Taylor's theorem can be used to vectorize this?
+            for (int i = 0; i < layer[j].nrow; i++) {
+//                NSLog(@"feature %f", features[i+BIAS_UNIT]);
+                // Skip bias unit
+                features[i+BIAS_UNIT] = 1 / (1 + exp(-features[i+BIAS_UNIT])); // Maybe Taylor's theorem can be used to vectorize this?
             }
         }
         // Propagate to the next level...
@@ -141,9 +147,9 @@ typedef struct {
     NSAssert(vector.count <= buffer.length / sizeof(double), @"Input vector size exceeds the maximum vector in configuration");
     
     double *features = (double *)buffer.mutableBytes;
-    features[0] = BIAS;
-    for (int i = 1; i < vector.count + 1; i++) {
-        features[i] = [[vector objectAtIndex:i] doubleValue];
+    features[0] = BIAS_VALUE;
+    for (int i = 0; i < vector.count; i++) {
+        features[i+BIAS_UNIT] = [vector[i] doubleValue];
     }
 
 }
