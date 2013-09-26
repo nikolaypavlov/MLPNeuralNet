@@ -12,21 +12,17 @@
 #define BIAS_UNIT 1
 
 typedef struct {
-    NSUInteger nrow; // Number of rows
-    NSUInteger ncol; // Number of columns
+    NSUInteger nrow;      // Number of rows
+    NSUInteger ncol;      // Number of columns
     double *weightMatrix;
-} MLPWeightMatrix;
+} MLPLayer;
 
 @interface MLPNeuralNet () {
-    NSMutableData *featureVector;
-    NSMutableData *outputBuffer;
-    MLPWeightMatrix *layer; // Array of weight matrices for each layer
+    NSMutableData *hiddenFeatures;
+    NSMutableData *buffer;
+    NSData *arrayOfLayers; // MLPLayer structures
 }
-
-@property (readonly, nonatomic) MLPOutput outputMode;
-@property (readonly, nonatomic) NSArray *neuronsInLayer;
-@property (readonly, nonatomic) NSUInteger numberOfLayers;
-
+@property (readonly, nonatomic) NSArray *layersConfig;
 @end
 
 @implementation MLPNeuralNet
@@ -39,62 +35,41 @@ typedef struct {
                 outputMode:(MLPOutput)outputMode {
     self = [super init];
     if (self) {
-        for (int i = 0; i < layersConfig.count; i ++) {
-            if (![[layersConfig objectAtIndex:i] isKindOfClass:[NSNumber class]]) {
-                @throw [NSException exceptionWithName:@"MLPNeuralNet initializer"
-                                               reason:@"Network configuraion should be a collection of NSNumbers"
-                                             userInfo:nil];
-            }
-        }
-        
-        for (int i = 0; i < weights.count; i++) {
-            if (![[weights objectAtIndex:i] isKindOfClass:[NSNumber class]]) {
-                @throw [NSException exceptionWithName:@"MLPNeuralNet initializer"
-                                               reason:@"Weight matrices should be a collection of NSNumbers"
-                                             userInfo:nil];
-            }
-        }
-        
         _numberOfLayers = layersConfig.count;
-        _neuronsInLayer = layersConfig;
+        _layersConfig = layersConfig;
+        _featureVectorSize = [_layersConfig.firstObject unsignedIntegerValue];
+        _predictionVectorSize = [_layersConfig.lastObject unsignedIntegerValue];
         _outputMode = outputMode;
         
-        // Allocate buffers for the maximum possible vector size, there should be a place for bias unit also.
-        unsigned maxVectorLength = [[layersConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
-        featureVector = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
-        outputBuffer = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
+        // Allocate buffers of the maximum possible vector size, there should be a place for bias unit also.
+        unsigned maxVectorLength = [[_layersConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
+        hiddenFeatures = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
+        buffer = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
         
-        // Allocate memory for the array of weight matrices. Note that we don't need a matrix for
-        // the input layer, so the total number is equal to numberOfLayers - 1.
-        layer = calloc(_numberOfLayers - 1, sizeof(MLPWeightMatrix));
-        NSAssert(layer != NULL, @"Out of memory for layers");
+        // Allocate memory for layers. Note that we don't need a matrix for
+        // the input layer, so the total size is equal to number of layers - 1.
+        arrayOfLayers = [NSMutableData dataWithLength:(_numberOfLayers - 1) * sizeof(MLPLayer)];
         
-        // Let's allocate resources for the wigth matrices and initialize them.
-        // If network has X units in layer j, Y units in layer j+1, then weight matrix
-        // for layer j will be of demension: Y x (X+1).
-        int crossLayerOffset = 0; // Offset between the weight matrices of different layers
+        // Allocate memory for the wigth matrices and initialize them.
+        MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+        int crossLayerOffset = 0; // An offset between the weight matrices of different layers
         for (int j = 0; j < _numberOfLayers - 1; j++) { // Recall we don't need a matrix for the input layer
-            layer[j].nrow = [_neuronsInLayer[j+BIAS_UNIT] unsignedIntegerValue];
-            layer[j].ncol = [_neuronsInLayer[j] unsignedIntegerValue] + 1;
-//            NSLog(@"Matrix demension for layer %d: is [%d x %d]", j, layer[j].nrow, layer[j].ncol);
             
-            // Allocate memory for the weight matrix of current layer.
+            // If network has X units in layer j, and Y units in layer j+1, then weight matrix for layer j
+            // will be of demension: [ Y x (X+1) ]
+            layer[j].nrow = [_layersConfig[j+1] unsignedIntegerValue];
+            layer[j].ncol = [_layersConfig[j] unsignedIntegerValue] + BIAS_UNIT;
             layer[j].weightMatrix = calloc(layer[j].nrow * layer[j].ncol, sizeof(double));
             NSAssert(layer[j].weightMatrix != NULL, @"Out of memory for weight matrices");
+//            NSLog(@"Matrix demension for layer %d: is [%d x %d]", j, layer[j].nrow, layer[j].ncol);
             
-            // Now let's initialize weigths
             int totalOffset = 0;
             for (int row = 0; row < layer[j].nrow; row++) {
                 for (int col = 0; col < layer[j].ncol; col++) {
-                    // Simulate the matrix using row-major ordering. Now matrix[offset] corresponds to M[row, col]
-                    int crossRowOffset = (col + row * layer[j].ncol); // Offset between matrix rows of the current layer
-                    totalOffset = crossRowOffset + crossLayerOffset;
+                    int crossRowOffset = (col + row * layer[j].ncol); // Simulate the matrix using row-major ordering
+                    totalOffset = crossRowOffset + crossLayerOffset;  // Now matrix[offset] corresponds to M[row, col]
                     layer[j].weightMatrix[crossRowOffset] = [weights[totalOffset] doubleValue];
                 }
-//                NSLog(@"Matrix for layer %d [%f, %f, %f]", j,
-//                      layer[j].weightMatrix[row * layer[j].ncol + 0],
-//                      layer[j].weightMatrix[row * layer[j].ncol + 1],
-//                      layer[j].weightMatrix[row * layer[j].ncol + 2]);
             }
             crossLayerOffset = totalOffset + 1; // Adjust offset to the next layer
         }
@@ -111,54 +86,46 @@ typedef struct {
 
 - (void)dealloc {
     // Free weight matrices in each layer
+    MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
     for (int j = 0; j < self.numberOfLayers - 1; j++) {
         free(layer[j].weightMatrix); layer[j].weightMatrix = NULL;
     }
-    // Then free layer itself
-    free(layer); layer = NULL;
 }
 
 #pragma mark - Prediction
 
-- (NSNumber *)predictByFeatureVector:(NSArray *)vector {
-    [self replaceBuffer:featureVector withBiasAndVector:vector];
-    double *features = (double *)featureVector.mutableBytes;
-    double *outputVector = (double *)outputBuffer.mutableBytes;
+- (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction {
+    NSAssert(vector.length / sizeof(double) == self.featureVectorSize, @"Feature-vector size exceeds specified in configuration");
+    NSAssert(prediction.length / sizeof(double) == self.predictionVectorSize, @"Prediction vector size exceeds specified in configuration");
     
+    // Copy feature-vector into buffer and add the bias unit at index 0
+    double *features = (double *)hiddenFeatures.mutableBytes;
+    features[0] = BIAS_VALUE;
+    memcpy(&features[1], (double *)vector.bytes, self.featureVectorSize * sizeof(double));
+    
+    //
     // Forward propagation algorithm
+    //
+    double *buf = (double *)buffer.mutableBytes;
+    MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
     for (int j = 0; j < self.numberOfLayers - 1; j++) {
-        // Calculate feature-vector for current layer j.
-        vDSP_mmulD(layer[j].weightMatrix, 1, features, 1, &outputVector[1], 1, layer[j].nrow, 1, layer[j].ncol);
         
-        // Insert bias unit at index 0 and overwrite old feature-vector with the new one
-        outputVector[0] = BIAS_VALUE;
-        memcpy(features, outputVector, (layer[j].nrow + BIAS_UNIT) * sizeof(double));
+        // 1. Calculate hidden features for current layer j
+        vDSP_mmulD(layer[j].weightMatrix, 1, features, 1, &buf[1], 1, layer[j].nrow, 1, layer[j].ncol);
         
-        // Apply logistic activation function if needed: http://en.wikipedia.org/wiki/Logistic_function
+        // 2. Add the bias unit at index 0 and propagate features to the next level
+        buf[0] = BIAS_VALUE;
+        memcpy(features, buf, (layer[j].nrow + BIAS_UNIT) * sizeof(double));
+        
+        // 3. Apply logistic activation function if needed: http://en.wikipedia.org/wiki/Logistic_function
         if (self.outputMode == MLPClassification) {
-            for (int i = 0; i < layer[j].nrow; i++) {
-                NSLog(@"feature %f", features[i+BIAS_UNIT]);
-                // Skip bias unit
-                features[i+BIAS_UNIT] = 1 / (1 + exp(-features[i+BIAS_UNIT])); // Maybe Taylor's theorem can be used to vectorize this?
+            for (int i = 0; i < layer[j].nrow; i++) { // Can we use Taylor's theorem to vectorize this loop?
+                features[i + BIAS_UNIT] = 1 / (1 + exp(-features[i + BIAS_UNIT])); // But skip the bias unit
             }
         }
-        // Propagate to the next level...
     }
-    return [NSNumber numberWithDouble:features[1]];
-}
-
-#pragma mark - Misc
-
-// Copies content of the NSArray into C array and adds bias unit at index 0
-- (void)replaceBuffer:(NSMutableData *)buffer withBiasAndVector:(NSArray *)vector {
-    NSAssert(vector.count <= buffer.length / sizeof(double), @"Input vector size exceeds the maximum vector in configuration");
-    
-    double *features = (double *)buffer.mutableBytes;
-    features[0] = BIAS_VALUE;
-    for (int i = 0; i < vector.count; i++) {
-        features[i+BIAS_UNIT] = [vector[i] doubleValue];
-    }
-
+    // 4. Copy an assessment into prediction vector
+    memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize * sizeof(double));
 }
 
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Accelerate/Accelerate.h>
 
-// Type of output. The logistic activitation is used for classification problems:
+// Type of output. The logistic activitation function is used for classification:
 // http://en.wikipedia.org/wiki/Logistic_function
 typedef enum {
     MLPRegression,     // Linear output from -Inf to +Inf
@@ -18,11 +18,16 @@ typedef enum {
 
 @interface MLPNeuralNet : NSObject
 
+@property (readonly, nonatomic) NSUInteger numberOfLayers;
+@property (readonly, nonatomic) NSUInteger featureVectorSize;
+@property (readonly, nonatomic) NSUInteger predictionVectorSize;
+@property (readonly, nonatomic) MLPOutput outputMode;
+
 // Designated initializer
 - (id)initWithLayersConfig:(NSArray *)layersConfig // of NSNumbers
                    weights:(NSArray *)weights      // of NSNumbers
                 outputMode:(MLPOutput)outputMode;
 
-- (NSNumber *)predictByFeatureVector:(NSArray *)vector; // of NSNumbers
+- (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction;
 
 @end

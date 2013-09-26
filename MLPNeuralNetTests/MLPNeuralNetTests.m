@@ -21,6 +21,10 @@
     NSArray *weightsForXNORModel;
     NSArray *layersForXNORModel;
     MLPNeuralNet *modelOfXNOR;
+    
+    NSMutableData *vector;
+    NSMutableData *prediction;
+    double *assessment;
 }
 
 @end
@@ -41,6 +45,9 @@
     weightsForXNORModel = [NSArray arrayWithObjects:@-30, @20, @20, @10, @-20, @-20, @-10, @20, @20, nil];
     layersForXNORModel = [NSArray arrayWithObjects:@2, @2, @1, nil];
     modelOfXNOR = [[MLPNeuralNet alloc] initWithLayersConfig:layersForXNORModel weights:weightsForXNORModel outputMode:MLPClassification];
+    
+    prediction = [NSMutableData dataWithLength:sizeof(double)];
+    assessment = (double *)prediction.bytes;
 }
 
 - (void)tearDown
@@ -49,91 +56,106 @@
     [super tearDown];
 }
 
-- (void)testImproperInitialization
-{
-    NSArray *weigths = [NSArray arrayWithObjects:[NSArray array], @1, nil];
-    NSArray *layers = [NSArray arrayWithObjects:@2, @3, @1, nil];
-    XCTAssertThrowsSpecificNamed([[MLPNeuralNet alloc] initWithLayersConfig:layers weights:weigths outputMode:MLPClassification],
-                                 NSException,
-                                 @"MLPNeuralNet initializer");
-}
-
 #pragma mark - AND model tests
 
 - (void)testModelOfANDOneOne
 {
-    double assessment = [[modelOfAND predictByFeatureVector:@[@1, @1]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+    double features[] = {1, 1};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
 - (void)testModelOfANDOneZero
 {
-    double assessment = [[modelOfAND predictByFeatureVector:@[@1, @0]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+    double features[] = {1, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
 - (void)testModelOfANDZeroOne
 {
-    double assessment = [[modelOfAND predictByFeatureVector:@[@0, @1]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+    double features[] = {0, 1};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
 - (void)testModelOfANDZeroZero
 {
-    double assessment = [[modelOfAND predictByFeatureVector:@[@0, @0]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+    double features[] = {0, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
 #pragma mark - OR model tests
 
 - (void)testModelOfOROneOne
 {
-    double assessment = [[modelOfOR predictByFeatureVector:@[@1, @1]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+    double features[] = {1, 1};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
 - (void)testModelOfOROneZero
 {
-    double assessment = [[modelOfOR predictByFeatureVector:@[@1, @0]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+    double features[] = {1, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
 - (void)testModelOfORZeroOne
 {
-    double assessment = [[modelOfOR predictByFeatureVector:@[@0, @1]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+    double features[] = {0, 1};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
 - (void)testModelOfORZeroZero
 {
-    double assessment = [[modelOfOR predictByFeatureVector:@[@0, @0]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+    double features[] = {0, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
 #pragma mark - XNOR model tests
 
 - (void)testModelOfXNOROneOne
 {
-    double assessment = [[modelOfXNOR predictByFeatureVector:@[@1, @1]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+    double features[] = {1, 1};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
 - (void)testModelOfXNOROneZero
 {
-    double assessment = [[modelOfXNOR predictByFeatureVector:@[@1, @0]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+    double features[] = {1, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
 - (void)testModelOfXNORZeroOne
 {
-    double assessment = [[modelOfXNOR predictByFeatureVector:@[@0, @1]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 0, 0.0001);
+    double features[] = {0, 1};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
 - (void)testModelOfXNORZeroZero
 {
-    double assessment = [[modelOfXNOR predictByFeatureVector:@[@0, @0]] doubleValue];
-    XCTAssertEqualWithAccuracy(assessment, 1, 0.0001);
+    double features[] = {0, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
 // TODO
