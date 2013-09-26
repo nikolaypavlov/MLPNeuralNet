@@ -128,4 +128,18 @@ typedef struct {
     memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize * sizeof(double));
 }
 
+#pragma mark - Misc
+
+- (NSString *)description {
+    MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+    NSMutableString *networkArch = [NSMutableString string];
+    NSUInteger numberOfWeights = 0;
+    for (int i = 0; i < arrayOfLayers.length / sizeof(MLPLayer); i++) {
+        numberOfWeights += layer[i].ncol * layer[i].nrow;
+        [networkArch appendFormat:@"%d-", layer[i].ncol - 1];
+    }
+    [networkArch appendFormat:@"%d", self.predictionVectorSize];
+    return [NSString stringWithFormat:@"a %@ network with %d weigths", networkArch, numberOfWeights];
+}
+
 @end
