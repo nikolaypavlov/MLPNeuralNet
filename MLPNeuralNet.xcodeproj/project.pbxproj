@@ -193,6 +193,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Biomech, Inc";
+				TargetAttributes = {
+					58215FC117F313060075487A = {
+						TestTargetID = 58215FB117F313060075487A;
+					};
+				};
 			};
 			buildConfigurationList = 58215FAD17F313060075487A /* Build configuration list for PBXProject "MLPNeuralNet" */;
 			compatibilityVersion = "Xcode 3.2";
