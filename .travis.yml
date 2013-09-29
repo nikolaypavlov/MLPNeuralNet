@@ -1,4 +1,5 @@
 language: objective-c
-env: XCWORKSPACE=MLPNeuralNet.xcodeproj/project.xcworkspace
-env: DEFAULT_TARGETS="build test"
-env: XCODEBUILD_SETTINGS="-sdk iphonesimulator"
+env: 
+  - XCWORKSPACE=MLPNeuralNet.xcodeproj/project.xcworkspace
+  - DEFAULT_TARGETS="build test"
+  - XCODEBUILD_SETTINGS="-sdk iphonesimulator"
