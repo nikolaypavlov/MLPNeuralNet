@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/nikolaypavlov/neural-net-for-iOS.png?branch=master)](https://travis-ci.org/nikolaypavlov/neural-net-for-iOS)
-
 Neural net for iOS
 ==================
 
