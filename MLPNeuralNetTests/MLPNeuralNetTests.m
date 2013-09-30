@@ -176,6 +176,8 @@
 
 }
 
+#pragma mark - Exceptions
+
 - (void)testWrongFeatureVectorSize {
     double features[] = {0, 0};
     vector = [NSMutableData dataWithBytes:features length:sizeof(features)-1];
