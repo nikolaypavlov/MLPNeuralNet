@@ -19,8 +19,8 @@ typedef enum {
 @interface MLPNeuralNet : NSObject
 
 @property (readonly, nonatomic) NSUInteger numberOfLayers;
-@property (readonly, nonatomic) NSUInteger featureVectorSize;
-@property (readonly, nonatomic) NSUInteger predictionVectorSize;
+@property (readonly, nonatomic) NSUInteger featureVectorSize; // in bytes
+@property (readonly, nonatomic) NSUInteger predictionVectorSize; // in bytes
 @property (readonly, nonatomic) MLPOutput outputMode;
 
 // Designated initializer

@@ -35,8 +35,8 @@ typedef struct {
     self = [super init];
     if (self) {
         _numberOfLayers = layerConfig.count;
-        _featureVectorSize = [layerConfig.firstObject unsignedIntegerValue];
-        _predictionVectorSize = [layerConfig.lastObject unsignedIntegerValue];
+        _featureVectorSize = [layerConfig.firstObject unsignedIntegerValue] * sizeof(double);
+        _predictionVectorSize = [layerConfig.lastObject unsignedIntegerValue] * sizeof(double);
         _outputMode = outputMode;
         
         // Allocate buffers of the maximum possible vector size, there should be a place for bias unit also.
@@ -93,13 +93,13 @@ typedef struct {
 #pragma mark - Prediction
 
 - (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction {
-    NSAssert(vector.length / sizeof(double) == self.featureVectorSize, @"Feature-vector size exceeds specified in configuration");
-    NSAssert(prediction.length / sizeof(double) == self.predictionVectorSize, @"Prediction vector size exceeds specified in configuration");
+    NSAssert(vector.length  >= self.featureVectorSize, @"Feature-vector size is less than specified in configuration");
+    NSAssert(prediction.length >= self.predictionVectorSize, @"Prediction vector size is less than specified in configuration");
     
     // Copy feature-vector into buffer and add the bias unit at index 0
     double *features = (double *)hiddenFeatures.mutableBytes;
     features[0] = BIAS_VALUE;
-    memcpy(&features[1], (double *)vector.bytes, self.featureVectorSize * sizeof(double));
+    memcpy(&features[1], (double *)vector.bytes, self.featureVectorSize);
     
     //
     // Forward propagation algorithm
@@ -123,7 +123,7 @@ typedef struct {
         }
     }
     // 4. Copy an assessment into prediction vector
-    memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize * sizeof(double));
+    memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize);
 }
 
 #pragma mark - Misc
@@ -136,7 +136,7 @@ typedef struct {
         numberOfWeights += layer[i].ncol * layer[i].nrow;
         [networkArch appendFormat:@"%d-", layer[i].ncol - 1];
     }
-    [networkArch appendFormat:@"%d", self.predictionVectorSize];
+    [networkArch appendFormat:@"%lu", self.predictionVectorSize / sizeof(double)];
     return [NSString stringWithFormat:@"a %@ network with %d weigths", networkArch, numberOfWeights];
 }
 
