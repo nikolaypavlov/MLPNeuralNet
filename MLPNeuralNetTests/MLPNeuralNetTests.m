@@ -176,6 +176,23 @@
 
 }
 
+- (void)testWrongFeatureVectorSize {
+    double features[] = {0, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)-1];
+    XCTAssertThrowsSpecificNamed([modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction],
+                                 NSException,
+                                 @"NSInternalInconsistencyException");
+}
+
+- (void)testWrongPredictionVectorSize {
+    double features[] = {0, 0};
+    vector = [NSMutableData dataWithBytes:features length:sizeof(features)-1];
+    NSMutableData *predictionVector = [NSMutableData dataWithLength:sizeof(double)-1];
+    XCTAssertThrowsSpecificNamed([modelOfXNOR predictByFeatureVector:vector intoPredictionVector:predictionVector],
+                                 NSException,
+                                 @"NSInternalInconsistencyException");
+}
+
 // TODO
 // Test that weight matrix conforms to network configuration
 
