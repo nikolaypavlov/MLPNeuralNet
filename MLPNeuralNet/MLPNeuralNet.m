@@ -22,7 +22,6 @@ typedef struct {
     NSMutableData *buffer;
     NSData *arrayOfLayers; // MLPLayer structures
 }
-@property (readonly, nonatomic) NSArray *layersConfig;
 @end
 
 @implementation MLPNeuralNet
@@ -30,19 +29,18 @@ typedef struct {
 #pragma mark - Initializer and dealloc
 
 // Designated initializer
-- (id)initWithLayerConfig:(NSArray *)layersConfig
-                   weights:(NSArray *)weights
-                outputMode:(MLPOutput)outputMode {
+- (id)initWithLayerConfig:(NSArray *)layerConfig
+                  weights:(NSArray *)weights
+               outputMode:(MLPOutput)outputMode {
     self = [super init];
     if (self) {
-        _numberOfLayers = layersConfig.count;
-        _layersConfig = layersConfig;
-        _featureVectorSize = [_layersConfig.firstObject unsignedIntegerValue];
-        _predictionVectorSize = [_layersConfig.lastObject unsignedIntegerValue];
+        _numberOfLayers = layerConfig.count;
+        _featureVectorSize = [layerConfig.firstObject unsignedIntegerValue];
+        _predictionVectorSize = [layerConfig.lastObject unsignedIntegerValue];
         _outputMode = outputMode;
         
         // Allocate buffers of the maximum possible vector size, there should be a place for bias unit also.
-        unsigned maxVectorLength = [[_layersConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
+        unsigned maxVectorLength = [[layerConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
         hiddenFeatures = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
         buffer = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
         
@@ -57,8 +55,8 @@ typedef struct {
             
             // If network has X units in layer j, and Y units in layer j+1, then weight matrix for layer j
             // will be of demension: [ Y x (X+1) ]
-            layer[j].nrow = [_layersConfig[j+1] unsignedIntegerValue];
-            layer[j].ncol = [_layersConfig[j] unsignedIntegerValue] + BIAS_UNIT;
+            layer[j].nrow = [layerConfig[j+1] unsignedIntegerValue];
+            layer[j].ncol = [layerConfig[j] unsignedIntegerValue] + BIAS_UNIT;
             layer[j].weightMatrix = calloc(layer[j].nrow * layer[j].ncol, sizeof(double));
             NSAssert(layer[j].weightMatrix != NULL, @"Out of memory for weight matrices");
 //            NSLog(@"Matrix demension for layer %d: is [%d x %d]", j, layer[j].nrow, layer[j].ncol);
