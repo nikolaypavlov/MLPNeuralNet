@@ -24,7 +24,7 @@ typedef enum {
 @property (readonly, nonatomic) MLPOutput outputMode;
 
 // Designated initializer
-- (id)initWithLayersConfig:(NSArray *)layersConfig // of NSNumbers
+- (id)initWithLayerConfig:(NSArray *)layersConfig // of NSNumbers
                    weights:(NSArray *)weights      // of NSNumbers
                 outputMode:(MLPOutput)outputMode;
 

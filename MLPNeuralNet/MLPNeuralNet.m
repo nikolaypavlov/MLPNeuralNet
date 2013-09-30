@@ -30,7 +30,7 @@ typedef struct {
 #pragma mark - Initializer and dealloc
 
 // Designated initializer
-- (id)initWithLayersConfig:(NSArray *)layersConfig
+- (id)initWithLayerConfig:(NSArray *)layersConfig
                    weights:(NSArray *)weights
                 outputMode:(MLPOutput)outputMode {
     self = [super init];
