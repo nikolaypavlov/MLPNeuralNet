@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/nikolaypavlov/neural-net-for-iOS.png?branch=master)](https://travis-ci.org/nikolaypavlov/neural-net-for-iOS)
+[![Build Status](https://travis-ci.org/nikolaypavlov/MLPNeuralNet.png?branch=master)](https://travis-ci.org/nikolaypavlov/MLPNeuralNet.png?branch=master)
 # MLPNeuralNet
 Fast [multilayer perceptron](http://en.wikipedia.org/wiki/Multilayer_perceptron) neural network library for iOS and Mac OS X. It is built on top of the [Apple's Accelerate Framework](https://developer.apple.com/library/ios/documentation/Accelerate/Reference/AccelerateFWRef/_index.html), using vectorized operations and hardware acceleration if available.
 
