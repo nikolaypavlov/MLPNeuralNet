@@ -12,8 +12,8 @@
 #define BIAS_UNIT 1
 
 typedef struct {
-    NSUInteger nrow;      // Number of rows
-    NSUInteger ncol;      // Number of columns
+    NSInteger nrow;      // Number of rows
+    NSInteger ncol;      // Number of columns
     double *weightMatrix;
 } MLPLayer;
 
@@ -64,7 +64,7 @@ typedef struct {
             int totalOffset = 0;
             for (int row = 0; row < layer[j].nrow; row++) {
                 for (int col = 0; col < layer[j].ncol; col++) {
-                    int crossRowOffset = (col + row * layer[j].ncol); // Simulate the matrix using row-major ordering
+                    int crossRowOffset = (col + row * (int)layer[j].ncol); // Simulate the matrix using row-major ordering
                     totalOffset = crossRowOffset + crossLayerOffset;  // Now matrix[offset] corresponds to M[row, col]
                     layer[j].weightMatrix[crossRowOffset] = [weights[totalOffset] doubleValue];
                 }
@@ -131,10 +131,10 @@ typedef struct {
 - (NSString *)description {
     MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
     NSMutableString *networkArch = [NSMutableString string];
-    NSUInteger numberOfWeights = 0;
+    int numberOfWeights = 0;
     for (int i = 0; i < arrayOfLayers.length / sizeof(MLPLayer); i++) {
         numberOfWeights += layer[i].ncol * layer[i].nrow;
-        [networkArch appendFormat:@"%d-", layer[i].ncol - 1];
+        [networkArch appendFormat:@"%d-", (int)layer[i].ncol - 1];
     }
     [networkArch appendFormat:@"%lu", self.predictionVectorSize / sizeof(double)];
     return [NSString stringWithFormat:@"a %@ network with %d weigths", networkArch, numberOfWeights];
