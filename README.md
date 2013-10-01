@@ -37,7 +37,6 @@ Our model has the following weights and network configuration:
 MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:@[@2, @1] 
                                                         weights:@[@-30, @20, @20] 
                                                      outputMode:MLPClassification];
-
 // Predict output of the model for data sample
 double sample[] = {0, 1};
 vector = [NSData dataWithBytes:sample length:sizeof(sample)];
