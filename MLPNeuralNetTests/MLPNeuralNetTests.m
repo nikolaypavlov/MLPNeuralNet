@@ -26,7 +26,7 @@
     NSArray *layersForRModel;
     MLPNeuralNet *modelFromR;
     
-    NSMutableData *vector;
+    NSData *vector;
     NSMutableData *prediction;
     double *assessment;
 }
@@ -69,7 +69,7 @@
 - (void)testModelOfANDOneOne
 {
     double features[] = {1, 1};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
@@ -77,7 +77,7 @@
 - (void)testModelOfANDOneZero
 {
     double features[] = {1, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
@@ -85,7 +85,7 @@
 - (void)testModelOfANDZeroOne
 {
     double features[] = {0, 1};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
@@ -93,7 +93,7 @@
 - (void)testModelOfANDZeroZero
 {
     double features[] = {0, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
@@ -103,7 +103,7 @@
 - (void)testModelOfOROneOne
 {
     double features[] = {1, 1};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
@@ -111,7 +111,7 @@
 - (void)testModelOfOROneZero
 {
     double features[] = {1, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
@@ -119,7 +119,7 @@
 - (void)testModelOfORZeroOne
 {
     double features[] = {0, 1};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
@@ -127,7 +127,7 @@
 - (void)testModelOfORZeroZero
 {
     double features[] = {0, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
@@ -137,7 +137,7 @@
 - (void)testModelOfXNOROneOne
 {
     double features[] = {1, 1};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
@@ -145,7 +145,7 @@
 - (void)testModelOfXNOROneZero
 {
     double features[] = {1, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
@@ -153,7 +153,7 @@
 - (void)testModelOfXNORZeroOne
 {
     double features[] = {0, 1};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
@@ -161,7 +161,7 @@
 - (void)testModelOfXNORZeroZero
 {
     double features[] = {0, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
@@ -170,7 +170,7 @@
 
 - (void)testPortabilityofModelFromR {
     double features[] = {-0.1469695, 0.3815642, 0.9089234, 0.0756491, 0.03446598, 0.005667798};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelFromR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0.9999989, 0.0000001);
 
@@ -180,7 +180,7 @@
 
 - (void)testWrongFeatureVectorSize {
     double features[] = {0, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)-1];
+    vector = [NSData dataWithBytes:features length:sizeof(features)-1];
     XCTAssertThrowsSpecificNamed([modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction],
                                  NSException,
                                  @"NSInternalInconsistencyException");
@@ -188,7 +188,7 @@
 
 - (void)testWrongPredictionVectorSize {
     double features[] = {0, 0};
-    vector = [NSMutableData dataWithBytes:features length:sizeof(features)-1];
+    vector = [NSData dataWithBytes:features length:sizeof(features)-1];
     NSMutableData *predictionVector = [NSMutableData dataWithLength:sizeof(double)-1];
     XCTAssertThrowsSpecificNamed([modelOfXNOR predictByFeatureVector:vector intoPredictionVector:predictionVector],
                                  NSException,
