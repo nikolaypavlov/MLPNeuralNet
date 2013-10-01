@@ -33,6 +33,7 @@ Our model has the following weights and network configuration:
 ```objectivec
 
 // Use designated initializer to pass configuration and weights to the model
+// Note: biased neurons (+1) are always omitted in the configuration
 MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:@[@2, @1] 
                                                         weights:@[@-30, @20, @20] 
                                                      outputMode:MLPClassification];
