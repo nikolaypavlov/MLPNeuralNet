@@ -176,7 +176,14 @@
 
 }
 
-#pragma mark - Exceptions
+#pragma mark - Number of weigths
+
+- (void)testNumberOfWeigthsByLayerConfig {
+    NSArray *cfg = @[@2, @3, @2, @1];
+    XCTAssertEqual([MLPNeuralNet estimateNumberOfWeightsForConfig:cfg], 20);
+}
+
+#pragma mark - Exception tests
 
 - (void)testWrongFeatureVectorSize {
     double features[] = {0, 0};
@@ -195,7 +202,14 @@
                                  @"NSInternalInconsistencyException");
 }
 
-// TODO
-// Test that weight matrix conforms to network configuration
+- (void)testIncorrectNumberOfWeights {
+    NSArray *layerCfg = @[@2, @3, @1];
+    NSArray *weights = @[@3, @1, @2];
+    XCTAssertThrowsSpecificNamed([[MLPNeuralNet alloc] initWithLayerConfig:layerCfg weights:weights outputMode:MLPRegression],
+                                 NSException,
+                                 @"NSInternalInconsistencyException");
+}
+
+
 
 @end

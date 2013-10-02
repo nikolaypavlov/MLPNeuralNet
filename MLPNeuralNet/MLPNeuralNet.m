@@ -34,6 +34,9 @@ typedef struct {
                outputMode:(MLPOutput)outputMode {
     self = [super init];
     if (self) {
+        NSAssert([self.class estimateNumberOfWeightsForConfig:layerConfig] == weights.count,
+                 @"Number of weights doesn't match the configuration");
+        
         _numberOfLayers = layerConfig.count;
         _featureVectorSize = [layerConfig.firstObject unsignedIntegerValue] * sizeof(double);
         _predictionVectorSize = [layerConfig.lastObject unsignedIntegerValue] * sizeof(double);
@@ -139,5 +142,15 @@ typedef struct {
     [networkArch appendFormat:@"%lu", self.predictionVectorSize / sizeof(double)];
     return [NSString stringWithFormat:@"a %@ network with %d weigths", networkArch, numberOfWeights];
 }
+
++ (NSInteger)estimateNumberOfWeightsForConfig:(NSArray *)layerConfig {
+    NSInteger count = 0;
+    for (int i = 0; i < layerConfig.count - 1; i++) {
+        count += ([layerConfig[i] unsignedIntValue] + 1) * [layerConfig[i+1] unsignedIntValue];
+    }
+    return count;
+}
+
+
 
 @end
