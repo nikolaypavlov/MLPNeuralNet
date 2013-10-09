@@ -215,14 +215,4 @@
                                  @"NSInternalInconsistencyException");
 }
 
-- (void)assertAlways {
-    NSAssert(NO, @"Exception thrown");
-}
-
-- (void)testException {
-    XCTAssertThrowsSpecificNamed([self assertAlways], NSException, @"NSInternalInconsistencyException");
-}
-
-
-
 @end

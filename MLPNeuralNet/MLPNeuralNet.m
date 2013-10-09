@@ -36,8 +36,7 @@ typedef struct {
     if (self) {
         if ([self.class countWeights:layerConfig] != weights.length / sizeof(double)) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:[NSString stringWithFormat:@"Number of weights doesn't conform to config: %ld vs %lu",
-                                                   (long)[self.class countWeights:layerConfig], weights.length / sizeof(double)]
+                                           reason:@"Number of weights doesn't match to configuration"
                                          userInfo:nil];
         }
         
@@ -101,8 +100,15 @@ typedef struct {
 #pragma mark - Prediction
 
 - (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction {
-    NSAssert(vector.length  >= self.featureVectorSize, @"Feature-vector size is less than specified in configuration");
-    NSAssert(prediction.length >= self.predictionVectorSize, @"Prediction vector size is less than specified in configuration");
+    if (vector.length < self.featureVectorSize) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"Feature-vector size is less than specified in configuration"
+                                     userInfo:nil];
+    } else if (prediction.length < self.predictionVectorSize) {
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                       reason:@"Prediction vector size is less than specified in configuration"
+                                     userInfo:nil];
+    }
     
     // Copy feature-vector into buffer and add the bias unit at index 0
     double *features = (double *)hiddenFeatures.mutableBytes;
