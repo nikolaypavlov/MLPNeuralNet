@@ -1,3 +1,6 @@
 language: objective-c
-env: 
-  - DEFAULT_TARGETS="build test" XCODEBUILD_SETTINGS="-sdk iphonesimulator"
+before_install:
+    - brew update
+    - brew uninstall xctool && brew install xctool --HEAD
+    - cd Tests && pod install && cd $TRAVIS_BUILD_DIR
+script: rake build
