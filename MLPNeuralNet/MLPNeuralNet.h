@@ -19,6 +19,8 @@
 //
 //  **********************************************************************************
 
+#import <Accelerate/Accelerate.h>
+
 // Type of output. The logistic activitation function is used for classification:
 // http://en.wikipedia.org/wiki/Logistic_function
 typedef enum {
