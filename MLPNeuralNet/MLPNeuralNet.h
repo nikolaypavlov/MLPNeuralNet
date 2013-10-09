@@ -45,6 +45,6 @@ typedef enum {
 - (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction;
 
 // Number of weigths requred for the neural net of this configuration
-+ (NSInteger)estimateNumberOfWeightsForConfig:(NSArray *)layerConfig;
++ (NSInteger)countWeights:(NSArray *)layerConfig;
 
 @end

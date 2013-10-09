@@ -184,7 +184,7 @@
 
 - (void)testNumberOfWeigthsByLayerConfig {
     NSArray *cfg = @[@2, @3, @2, @1];
-    XCTAssertEqual([MLPNeuralNet estimateNumberOfWeightsForConfig:cfg], (NSInteger)20);
+    XCTAssertEqual([MLPNeuralNet countWeights:cfg], (NSInteger)20);
 }
 
 #pragma mark - Exception tests
@@ -213,6 +213,14 @@
     XCTAssertThrowsSpecificNamed([[MLPNeuralNet alloc] initWithLayerConfig:layerCfg weights:weights outputMode:MLPRegression],
                                  NSException,
                                  @"NSInternalInconsistencyException");
+}
+
+- (void)assertAlways {
+    NSAssert(NO, @"Exception thrown");
+}
+
+- (void)testException {
+    XCTAssertThrowsSpecificNamed([self assertAlways], NSException, @"NSInternalInconsistencyException");
 }
 
 
