@@ -7,274 +7,377 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		58215FB617F313060075487A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FB517F313060075487A /* Foundation.framework */; };
-		58215FBB17F313060075487A /* MLPNeuralNet.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 58215FBA17F313060075487A /* MLPNeuralNet.h */; };
-		58215FBD17F313060075487A /* MLPNeuralNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 58215FBC17F313060075487A /* MLPNeuralNet.m */; };
-		58215FC417F313060075487A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FC317F313060075487A /* XCTest.framework */; };
-		58215FC517F313060075487A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FB517F313060075487A /* Foundation.framework */; };
-		58215FC717F313060075487A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FC617F313060075487A /* UIKit.framework */; };
-		58215FCA17F313060075487A /* libMLPNeuralNet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FB217F313060075487A /* libMLPNeuralNet.a */; };
-		58215FD017F313060075487A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 58215FCE17F313060075487A /* InfoPlist.strings */; };
-		58215FD217F313060075487A /* MLPNeuralNetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58215FD117F313060075487A /* MLPNeuralNetTests.m */; };
-		58215FF317F318480075487A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58215FF217F318480075487A /* Accelerate.framework */; };
+		58D886D31805399E002B43EF /* MLPNeuralNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D886D21805399E002B43EF /* MLPNeuralNet.m */; };
+		58D886DA1805399E002B43EF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886D91805399E002B43EF /* XCTest.framework */; };
+		58D886DB1805399E002B43EF /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886C41805399E002B43EF /* Cocoa.framework */; };
+		58D886DE1805399E002B43EF /* MLPNeuralNet.framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886C11805399E002B43EF /* MLPNeuralNet.framework.framework */; };
+		58D886E61805399E002B43EF /* MLPNeuralNetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D886E51805399E002B43EF /* MLPNeuralNetTests.m */; };
+		58D886F518054790002B43EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886F418054790002B43EF /* Foundation.framework */; };
+		58D8870218054790002B43EF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886D91805399E002B43EF /* XCTest.framework */; };
+		58D8870318054790002B43EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886F418054790002B43EF /* Foundation.framework */; };
+		58D8871718054A0A002B43EF /* MLPNeuralNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 58D886D11805399E002B43EF /* MLPNeuralNet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58D8871818054A12002B43EF /* MLPNeuralNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D886D21805399E002B43EF /* MLPNeuralNet.m */; };
+		58D8871A18054A5D002B43EF /* MLPNeuralNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 58D886D11805399E002B43EF /* MLPNeuralNet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		58D8871E18054E3D002B43EF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D8871D18054E3D002B43EF /* Accelerate.framework */; };
+		58D8871F18054E6F002B43EF /* libMLPNeuralNet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886F318054790002B43EF /* libMLPNeuralNet.a */; };
+		58D8872118054E80002B43EF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D8872018054E80002B43EF /* Accelerate.framework */; };
+		58D8872218054E9D002B43EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886F418054790002B43EF /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		58215FC817F313060075487A /* PBXContainerItemProxy */ = {
+		58D886DC1805399E002B43EF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 58215FAA17F313060075487A /* Project object */;
+			containerPortal = 58D886B81805399E002B43EF /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 58215FB117F313060075487A;
+			remoteGlobalIDString = 58D886C01805399E002B43EF;
+			remoteInfo = MLPNeuralNet;
+		};
+		58D8870618054790002B43EF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 58D886B81805399E002B43EF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 58D886F218054790002B43EF;
 			remoteInfo = MLPNeuralNet;
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		58215FB017F313060075487A /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-				58215FBB17F313060075487A /* MLPNeuralNet.h in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		58215FB217F313060075487A /* libMLPNeuralNet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMLPNeuralNet.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		58215FB517F313060075487A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		58215FB917F313060075487A /* MLPNeuralNet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MLPNeuralNet-Prefix.pch"; sourceTree = "<group>"; };
-		58215FBA17F313060075487A /* MLPNeuralNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLPNeuralNet.h; sourceTree = "<group>"; };
-		58215FBC17F313060075487A /* MLPNeuralNet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLPNeuralNet.m; sourceTree = "<group>"; };
-		58215FC217F313060075487A /* MLPNeuralNetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MLPNeuralNetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		58215FC317F313060075487A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		58215FC617F313060075487A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		58215FCD17F313060075487A /* MLPNeuralNetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MLPNeuralNetTests-Info.plist"; sourceTree = "<group>"; };
-		58215FCF17F313060075487A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		58215FD117F313060075487A /* MLPNeuralNetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLPNeuralNetTests.m; sourceTree = "<group>"; };
-		58215FF217F318480075487A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		58D886C11805399E002B43EF /* MLPNeuralNet.framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MLPNeuralNet.framework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58D886C41805399E002B43EF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		58D886CC1805399E002B43EF /* MLPNeuralNet-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MLPNeuralNet-Info.plist"; sourceTree = "<group>"; };
+		58D886D01805399E002B43EF /* MLPNeuralNet-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MLPNeuralNet-Prefix.pch"; sourceTree = "<group>"; };
+		58D886D11805399E002B43EF /* MLPNeuralNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLPNeuralNet.h; sourceTree = "<group>"; };
+		58D886D21805399E002B43EF /* MLPNeuralNet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLPNeuralNet.m; sourceTree = "<group>"; };
+		58D886D81805399E002B43EF /* MLPNeuralNetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MLPNeuralNetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		58D886D91805399E002B43EF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		58D886E11805399E002B43EF /* MLPNeuralNetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MLPNeuralNetTests-Info.plist"; sourceTree = "<group>"; };
+		58D886E51805399E002B43EF /* MLPNeuralNetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLPNeuralNetTests.m; sourceTree = "<group>"; };
+		58D886F318054790002B43EF /* libMLPNeuralNet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMLPNeuralNet.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		58D886F418054790002B43EF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		58D8870118054790002B43EF /* MLPNeuralNetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MLPNeuralNetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		58D8871D18054E3D002B43EF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
+		58D8872018054E80002B43EF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		58215FAF17F313060075487A /* Frameworks */ = {
+		58D886BD1805399E002B43EF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58215FF317F318480075487A /* Accelerate.framework in Frameworks */,
-				58215FB617F313060075487A /* Foundation.framework in Frameworks */,
+				58D8872218054E9D002B43EF /* Foundation.framework in Frameworks */,
+				58D8872118054E80002B43EF /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		58215FBF17F313060075487A /* Frameworks */ = {
+		58D886D51805399E002B43EF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58215FC417F313060075487A /* XCTest.framework in Frameworks */,
-				58215FC717F313060075487A /* UIKit.framework in Frameworks */,
-				58215FCA17F313060075487A /* libMLPNeuralNet.a in Frameworks */,
-				58215FC517F313060075487A /* Foundation.framework in Frameworks */,
+				58D886DE1805399E002B43EF /* MLPNeuralNet.framework.framework in Frameworks */,
+				58D886DB1805399E002B43EF /* Cocoa.framework in Frameworks */,
+				58D886DA1805399E002B43EF /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58D886F018054790002B43EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58D8871E18054E3D002B43EF /* Accelerate.framework in Frameworks */,
+				58D886F518054790002B43EF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58D886FE18054790002B43EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58D8871F18054E6F002B43EF /* libMLPNeuralNet.a in Frameworks */,
+				58D8870218054790002B43EF /* XCTest.framework in Frameworks */,
+				58D8870318054790002B43EF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		58215FA917F313060075487A = {
+		58D886B71805399E002B43EF = {
 			isa = PBXGroup;
 			children = (
-				58215FB717F313060075487A /* MLPNeuralNet */,
-				58215FCB17F313060075487A /* MLPNeuralNetTests */,
-				58215FB417F313060075487A /* Frameworks */,
-				58215FB317F313060075487A /* Products */,
+				58D886CA1805399E002B43EF /* MLPNeuralNet */,
+				58D886DF1805399E002B43EF /* MLPNeuralNetTests */,
+				58D886C31805399E002B43EF /* Frameworks */,
+				58D886C21805399E002B43EF /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		58215FB317F313060075487A /* Products */ = {
+		58D886C21805399E002B43EF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				58215FB217F313060075487A /* libMLPNeuralNet.a */,
-				58215FC217F313060075487A /* MLPNeuralNetTests.xctest */,
+				58D886C11805399E002B43EF /* MLPNeuralNet.framework.framework */,
+				58D886D81805399E002B43EF /* MLPNeuralNetTests.xctest */,
+				58D886F318054790002B43EF /* libMLPNeuralNet.a */,
+				58D8870118054790002B43EF /* MLPNeuralNetTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		58215FB417F313060075487A /* Frameworks */ = {
+		58D886C31805399E002B43EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				58215FF217F318480075487A /* Accelerate.framework */,
-				58215FB517F313060075487A /* Foundation.framework */,
-				58215FC317F313060075487A /* XCTest.framework */,
-				58215FC617F313060075487A /* UIKit.framework */,
+				58D8872018054E80002B43EF /* Accelerate.framework */,
+				58D8871D18054E3D002B43EF /* Accelerate.framework */,
+				58D886C41805399E002B43EF /* Cocoa.framework */,
+				58D886D91805399E002B43EF /* XCTest.framework */,
+				58D886F418054790002B43EF /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		58215FB717F313060075487A /* MLPNeuralNet */ = {
+		58D886CA1805399E002B43EF /* MLPNeuralNet */ = {
 			isa = PBXGroup;
 			children = (
-				58215FBA17F313060075487A /* MLPNeuralNet.h */,
-				58215FBC17F313060075487A /* MLPNeuralNet.m */,
-				58215FB817F313060075487A /* Supporting Files */,
+				58D886D11805399E002B43EF /* MLPNeuralNet.h */,
+				58D886D21805399E002B43EF /* MLPNeuralNet.m */,
+				58D886CB1805399E002B43EF /* Supporting Files */,
 			);
 			path = MLPNeuralNet;
 			sourceTree = "<group>";
 		};
-		58215FB817F313060075487A /* Supporting Files */ = {
+		58D886CB1805399E002B43EF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				58215FB917F313060075487A /* MLPNeuralNet-Prefix.pch */,
+				58D886CC1805399E002B43EF /* MLPNeuralNet-Info.plist */,
+				58D886D01805399E002B43EF /* MLPNeuralNet-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		58215FCB17F313060075487A /* MLPNeuralNetTests */ = {
+		58D886DF1805399E002B43EF /* MLPNeuralNetTests */ = {
 			isa = PBXGroup;
 			children = (
-				58215FD117F313060075487A /* MLPNeuralNetTests.m */,
-				58215FCC17F313060075487A /* Supporting Files */,
+				58D886E51805399E002B43EF /* MLPNeuralNetTests.m */,
+				58D886E01805399E002B43EF /* Supporting Files */,
 			);
 			path = MLPNeuralNetTests;
 			sourceTree = "<group>";
 		};
-		58215FCC17F313060075487A /* Supporting Files */ = {
+		58D886E01805399E002B43EF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				58215FCD17F313060075487A /* MLPNeuralNetTests-Info.plist */,
-				58215FCE17F313060075487A /* InfoPlist.strings */,
+				58D886E11805399E002B43EF /* MLPNeuralNetTests-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		58D886BE1805399E002B43EF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58D8871718054A0A002B43EF /* MLPNeuralNet.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58D8871918054A52002B43EF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58D8871A18054A5D002B43EF /* MLPNeuralNet.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		58215FB117F313060075487A /* MLPNeuralNet */ = {
+		58D886C01805399E002B43EF /* MLPNeuralNet.framework */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58215FD517F313060075487A /* Build configuration list for PBXNativeTarget "MLPNeuralNet" */;
+			buildConfigurationList = 58D886E91805399E002B43EF /* Build configuration list for PBXNativeTarget "MLPNeuralNet.framework" */;
 			buildPhases = (
-				58215FAE17F313060075487A /* Sources */,
-				58215FAF17F313060075487A /* Frameworks */,
-				58215FB017F313060075487A /* CopyFiles */,
+				58D886BC1805399E002B43EF /* Sources */,
+				58D886BD1805399E002B43EF /* Frameworks */,
+				58D886BE1805399E002B43EF /* Headers */,
+				58D886BF1805399E002B43EF /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = MLPNeuralNet;
+			name = MLPNeuralNet.framework;
 			productName = MLPNeuralNet;
-			productReference = 58215FB217F313060075487A /* libMLPNeuralNet.a */;
+			productReference = 58D886C11805399E002B43EF /* MLPNeuralNet.framework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		58D886D71805399E002B43EF /* Test.framework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58D886EC1805399E002B43EF /* Build configuration list for PBXNativeTarget "Test.framework" */;
+			buildPhases = (
+				58D886D41805399E002B43EF /* Sources */,
+				58D886D51805399E002B43EF /* Frameworks */,
+				58D886D61805399E002B43EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				58D886DD1805399E002B43EF /* PBXTargetDependency */,
+			);
+			name = Test.framework;
+			productName = MLPNeuralNetTests;
+			productReference = 58D886D81805399E002B43EF /* MLPNeuralNetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		58D886F218054790002B43EF /* MLPNeuralNet.a */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58D8871118054790002B43EF /* Build configuration list for PBXNativeTarget "MLPNeuralNet.a" */;
+			buildPhases = (
+				58D886EF18054790002B43EF /* Sources */,
+				58D886F018054790002B43EF /* Frameworks */,
+				58D8871918054A52002B43EF /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MLPNeuralNet.a;
+			productName = MLPNeuralNet;
+			productReference = 58D886F318054790002B43EF /* libMLPNeuralNet.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		58215FC117F313060075487A /* MLPNeuralNetTests */ = {
+		58D8870018054790002B43EF /* Test.a */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58215FD817F313060075487A /* Build configuration list for PBXNativeTarget "MLPNeuralNetTests" */;
+			buildConfigurationList = 58D8871418054790002B43EF /* Build configuration list for PBXNativeTarget "Test.a" */;
 			buildPhases = (
-				58215FBE17F313060075487A /* Sources */,
-				58215FBF17F313060075487A /* Frameworks */,
-				58215FC017F313060075487A /* Resources */,
+				58D886FD18054790002B43EF /* Sources */,
+				58D886FE18054790002B43EF /* Frameworks */,
+				58D886FF18054790002B43EF /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				58215FC917F313060075487A /* PBXTargetDependency */,
+				58D8870718054790002B43EF /* PBXTargetDependency */,
 			);
-			name = MLPNeuralNetTests;
+			name = Test.a;
 			productName = MLPNeuralNetTests;
-			productReference = 58215FC217F313060075487A /* MLPNeuralNetTests.xctest */;
+			productReference = 58D8870118054790002B43EF /* MLPNeuralNetTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		58215FAA17F313060075487A /* Project object */ = {
+		58D886B81805399E002B43EF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Biomech, Inc";
 				TargetAttributes = {
-					58215FC117F313060075487A = {
-						TestTargetID = 58215FB117F313060075487A;
+					58D886D71805399E002B43EF = {
+						TestTargetID = 58D886C01805399E002B43EF;
+					};
+					58D8870018054790002B43EF = {
+						TestTargetID = 58D886C01805399E002B43EF;
 					};
 				};
 			};
-			buildConfigurationList = 58215FAD17F313060075487A /* Build configuration list for PBXProject "MLPNeuralNet" */;
+			buildConfigurationList = 58D886BB1805399E002B43EF /* Build configuration list for PBXProject "MLPNeuralNet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 58215FA917F313060075487A;
-			productRefGroup = 58215FB317F313060075487A /* Products */;
+			mainGroup = 58D886B71805399E002B43EF;
+			productRefGroup = 58D886C21805399E002B43EF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58215FB117F313060075487A /* MLPNeuralNet */,
-				58215FC117F313060075487A /* MLPNeuralNetTests */,
+				58D886C01805399E002B43EF /* MLPNeuralNet.framework */,
+				58D886D71805399E002B43EF /* Test.framework */,
+				58D886F218054790002B43EF /* MLPNeuralNet.a */,
+				58D8870018054790002B43EF /* Test.a */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		58215FC017F313060075487A /* Resources */ = {
+		58D886BF1805399E002B43EF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58215FD017F313060075487A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58D886D61805399E002B43EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58D886FF18054790002B43EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		58215FAE17F313060075487A /* Sources */ = {
+		58D886BC1805399E002B43EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58215FBD17F313060075487A /* MLPNeuralNet.m in Sources */,
+				58D886D31805399E002B43EF /* MLPNeuralNet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		58215FBE17F313060075487A /* Sources */ = {
+		58D886D41805399E002B43EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58215FD217F313060075487A /* MLPNeuralNetTests.m in Sources */,
+				58D886E61805399E002B43EF /* MLPNeuralNetTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58D886EF18054790002B43EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58D8871818054A12002B43EF /* MLPNeuralNet.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58D886FD18054790002B43EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		58215FC917F313060075487A /* PBXTargetDependency */ = {
+		58D886DD1805399E002B43EF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 58215FB117F313060075487A /* MLPNeuralNet */;
-			targetProxy = 58215FC817F313060075487A /* PBXContainerItemProxy */;
+			target = 58D886C01805399E002B43EF /* MLPNeuralNet.framework */;
+			targetProxy = 58D886DC1805399E002B43EF /* PBXContainerItemProxy */;
+		};
+		58D8870718054790002B43EF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58D886F218054790002B43EF /* MLPNeuralNet.a */;
+			targetProxy = 58D8870618054790002B43EF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		58215FCE17F313060075487A /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				58215FCF17F313060075487A /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		58215FD317F313060075487A /* Debug */ = {
+		58D886E71805399E002B43EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -287,6 +390,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -299,20 +403,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
-		58215FD417F313060075487A /* Release */ = {
+		58D886E81805399E002B43EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -323,48 +425,136 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		58215FD617F313060075487A /* Debug */ = {
+		58D886EA1805399E002B43EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
+				INFOPLIST_FILE = "MLPNeuralNet/MLPNeuralNet-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		58D886EB1805399E002B43EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
+				INFOPLIST_FILE = "MLPNeuralNet/MLPNeuralNet-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		58D886ED1805399E002B43EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MLPNeuralNet.framework.framework/Versions/A/MLPNeuralNet.framework";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		58D886EE1805399E002B43EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MLPNeuralNet.framework.framework/Versions/A/MLPNeuralNet.framework";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
+				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		58D8871218054790002B43EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/MLPNeuralNet.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MLPNeuralNet;
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		58215FD717F313060075487A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DSTROOT = /tmp/MLPNeuralNet.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		58215FD917F313060075487A /* Debug */ = {
+		58D8871318054790002B43EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				DSTROOT = /tmp/MLPNeuralNet.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = MLPNeuralNet;
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		58D8871518054790002B43EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MLPNeuralNet.framework.framework/Versions/A/MLPNeuralNet.framework";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -377,15 +567,20 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
-		58215FDA17F313060075487A /* Release */ = {
+		58D8871618054790002B43EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MLPNeuralNet.framework.framework/Versions/A/MLPNeuralNet.framework";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -394,7 +589,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
 				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
@@ -402,34 +601,48 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58215FAD17F313060075487A /* Build configuration list for PBXProject "MLPNeuralNet" */ = {
+		58D886BB1805399E002B43EF /* Build configuration list for PBXProject "MLPNeuralNet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				58215FD317F313060075487A /* Debug */,
-				58215FD417F313060075487A /* Release */,
+				58D886E71805399E002B43EF /* Debug */,
+				58D886E81805399E002B43EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58215FD517F313060075487A /* Build configuration list for PBXNativeTarget "MLPNeuralNet" */ = {
+		58D886E91805399E002B43EF /* Build configuration list for PBXNativeTarget "MLPNeuralNet.framework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				58215FD617F313060075487A /* Debug */,
-				58215FD717F313060075487A /* Release */,
+				58D886EA1805399E002B43EF /* Debug */,
+				58D886EB1805399E002B43EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
-		58215FD817F313060075487A /* Build configuration list for PBXNativeTarget "MLPNeuralNetTests" */ = {
+		58D886EC1805399E002B43EF /* Build configuration list for PBXNativeTarget "Test.framework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				58215FD917F313060075487A /* Debug */,
-				58215FDA17F313060075487A /* Release */,
+				58D886ED1805399E002B43EF /* Debug */,
+				58D886EE1805399E002B43EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+		};
+		58D8871118054790002B43EF /* Build configuration list for PBXNativeTarget "MLPNeuralNet.a" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58D8871218054790002B43EF /* Debug */,
+				58D8871318054790002B43EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		58D8871418054790002B43EF /* Build configuration list for PBXNativeTarget "Test.a" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58D8871518054790002B43EF /* Debug */,
+				58D8871618054790002B43EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 58215FAA17F313060075487A /* Project object */;
+	rootObject = 58D886B81805399E002B43EF /* Project object */;
 }

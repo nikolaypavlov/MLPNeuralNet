@@ -173,14 +173,14 @@
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelFromR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0.9999989, 0.0000001);
-
+    
 }
 
 #pragma mark - Number of weigths
 
 - (void)testNumberOfWeigthsByLayerConfig {
     NSArray *cfg = @[@2, @3, @2, @1];
-    XCTAssertEqual([MLPNeuralNet estimateNumberOfWeightsForConfig:cfg], 20);
+    XCTAssertEqual([MLPNeuralNet estimateNumberOfWeightsForConfig:cfg], (NSInteger)20);
 }
 
 #pragma mark - Exception tests

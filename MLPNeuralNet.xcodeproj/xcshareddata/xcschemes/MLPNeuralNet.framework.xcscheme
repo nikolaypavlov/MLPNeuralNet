@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "58215FB117F313060075487A"
-               BuildableName = "libMLPNeuralNet.a"
-               BlueprintName = "MLPNeuralNet"
+               BlueprintIdentifier = "58D886C01805399E002B43EF"
+               BuildableName = "MLPNeuralNet.framework.framework"
+               BlueprintName = "MLPNeuralNet.framework"
                ReferencedContainer = "container:MLPNeuralNet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "58215FC117F313060075487A"
+               BlueprintIdentifier = "58D886D71805399E002B43EF"
                BuildableName = "MLPNeuralNetTests.xctest"
-               BlueprintName = "MLPNeuralNetTests"
+               BlueprintName = "Test.framework"
                ReferencedContainer = "container:MLPNeuralNet.xcodeproj">
             </BuildableReference>
          </TestableReference>

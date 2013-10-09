@@ -5,17 +5,19 @@
 //  Created by Mykola Pavlov on 9/23/13.
 //  Copyright (c) 2013 Biomech, Inc. All rights reserved.
 //
-// This library is designed to predicts new examples by trained neural net.
-// Use it for regression, classification and multiclass classification.
+//  **********************************************************************************
 //
-// MLPNeuralNet is fully vectorized and uses double precision to store the data.
-// You can use as many hidden layers as you want.
+//  This library is designed to predicts new examples by trained neural net.
+//  Use it for regression, classification and multiclass classification problems.
 //
-// NOTE: if your feature-vector containes class/factor variables, it's your duty to provide them in portable way.
-// For example, if you encode "red", "green", "blue" as integers 1, 2, 3 in Matlab, then use the same encoding for MLPNeuralNet.
-
-#import <Foundation/Foundation.h>
-#import <Accelerate/Accelerate.h>
+//  MLPNeuralNet is fully vectorized, it uses double precision to store the data and
+//  you can use as many hidden layers as you want.
+//
+//  NOTE: if your feature-vector containes class/factor variables, it's your duty
+//  to provide them in portable way. For example, if you encode "red", "green", "blue"
+//  as integers 1, 2, 3 in Matlab, you should use the same encoding for MLPNeuralNet.
+//
+//  **********************************************************************************
 
 // Type of output. The logistic activitation function is used for classification:
 // http://en.wikipedia.org/wiki/Logistic_function

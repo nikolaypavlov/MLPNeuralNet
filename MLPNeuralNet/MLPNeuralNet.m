@@ -38,7 +38,7 @@ typedef struct {
                  @"Number of weights doesn't match the configuration");
         
         _numberOfLayers = layerConfig.count;
-        _featureVectorSize = [layerConfig.firstObject unsignedIntegerValue] * sizeof(double);
+        _featureVectorSize = [layerConfig[0] unsignedIntegerValue] * sizeof(double);
         _predictionVectorSize = [layerConfig.lastObject unsignedIntegerValue] * sizeof(double);
         _outputMode = outputMode;
         
@@ -62,7 +62,7 @@ typedef struct {
             layer[j].ncol = [layerConfig[j] unsignedIntegerValue] + BIAS_UNIT;
             layer[j].weightMatrix = calloc(layer[j].nrow * layer[j].ncol, sizeof(double));
             NSAssert(layer[j].weightMatrix != NULL, @"Out of memory for weight matrices");
-//            NSLog(@"Matrix demension for layer %d: is [%d x %d]", j, layer[j].nrow, layer[j].ncol);
+            //            NSLog(@"Matrix demension for layer %d: is [%d x %d]", j, layer[j].nrow, layer[j].ncol);
             
             int totalOffset = 0;
             for (int row = 0; row < layer[j].nrow; row++) {
