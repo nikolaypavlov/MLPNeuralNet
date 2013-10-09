@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "58D886C01805399E002B43EF"
-               BuildableName = "MLPNeuralNet.framework.framework"
+               BuildableName = "MLPNeuralNet.framework"
                BlueprintName = "MLPNeuralNet.framework"
                ReferencedContainer = "container:MLPNeuralNet.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "58D886D71805399E002B43EF"
-               BuildableName = "MLPNeuralNetTests.xctest"
+               BuildableName = "Test.framework.xctest"
                BlueprintName = "Test.framework"
                ReferencedContainer = "container:MLPNeuralNet.xcodeproj">
             </BuildableReference>

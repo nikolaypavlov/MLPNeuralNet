@@ -32,8 +32,8 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "58D8870018054790002B43EF"
-               BuildableName = "MLPNeuralNetTests.xctest"
+               BlueprintIdentifier = "58D8873E180563AC002B43EF"
+               BuildableName = "Test.a.xctest"
                BlueprintName = "Test.a"
                ReferencedContainer = "container:MLPNeuralNet.xcodeproj">
             </BuildableReference>
