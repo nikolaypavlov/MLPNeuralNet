@@ -37,7 +37,7 @@ typedef enum {
 
 // Designated initializer
 - (id)initWithLayerConfig:(NSArray *)layerConfig // of NSNumbers
-                  weights:(NSArray *)weights      // of NSNumbers
+                  weights:(NSData *)weights      // of double
                outputMode:(MLPOutput)outputMode;
 
 // Predicts new examples by feature-vector and copies the prediction into specified buffer

@@ -30,11 +30,11 @@ typedef struct {
 
 // Designated initializer
 - (id)initWithLayerConfig:(NSArray *)layerConfig
-                  weights:(NSArray *)weights
+                  weights:(NSData *)weights
                outputMode:(MLPOutput)outputMode {
     self = [super init];
     if (self) {
-        NSAssert([self.class estimateNumberOfWeightsForConfig:layerConfig] == weights.count,
+        NSAssert([self.class estimateNumberOfWeightsForConfig:layerConfig] == weights.length / sizeof(double),
                  @"Number of weights doesn't match the configuration");
         
         _numberOfLayers = layerConfig.count;
@@ -53,6 +53,7 @@ typedef struct {
         
         // Allocate memory for the wigth matrices and initialize them.
         MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+        double *wts = (double *)weights.bytes;
         int crossLayerOffset = 0; // An offset between the weight matrices of different layers
         for (int j = 0; j < _numberOfLayers - 1; j++) { // Recall we don't need a matrix for the input layer
             
@@ -69,7 +70,7 @@ typedef struct {
                 for (int col = 0; col < layer[j].ncol; col++) {
                     int crossRowOffset = (col + row * (int)layer[j].ncol); // Simulate the matrix using row-major ordering
                     totalOffset = crossRowOffset + crossLayerOffset;  // Now matrix[offset] corresponds to M[row, col]
-                    layer[j].weightMatrix[crossRowOffset] = [weights[totalOffset] doubleValue];
+                    layer[j].weightMatrix[crossRowOffset] = wts[totalOffset];
                 }
             }
             crossLayerOffset = totalOffset + 1; // Adjust offset to the next layer
