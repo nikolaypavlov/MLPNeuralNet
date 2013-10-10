@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 
   s.name         = "MLPNeuralNet"
-  s.version      = "0.0.4"
+  s.version      = "1.0.0"
   s.summary      = "Fast multilayer perceptron neural net for iOS and Mac OS X"
   s.license      = { :type => 'BSD' }
   s.author       = { "Mykola Pavlov" => "me@nikolaypavlov.com" }
-  s.source       = { :git => "https://github.com/nikolaypavlov/MLPNeuralNet.git", :tag => "0.0.4" }
+  s.source       = { :git => "https://github.com/nikolaypavlov/MLPNeuralNet.git", :tag => "1.0.0" }
   s.homepage     = "http://nikolaypavlov.github.io/MLPNeuralNet/"
   s.screenshots  = "http://nikolaypavlov.github.io/MLPNeuralNet/images/500px-Artificial_neural_network.png"
 
