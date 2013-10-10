@@ -56,9 +56,7 @@ NSLog(@"Model assessment is %f", assessment[0]);
 ```
 
 ## Getting started 
-This instruction describes on how to install MLPNeuralNet using the [CocoaPods](http://cocoapods.org/). It is written for Xcode 5, using the iOS 7 SDK.
-
-If you are familiar with with 3rd-party library management, just clone [MLPNeuralNet repo](https://github.com/nikolaypavlov/MLPNeuralNet) on Github and import it to XCode directly as a subproject.
+This instruction describes on how to install MLPNeuralNet using the [CocoaPods](http://cocoapods.org/). It is written for Xcode 5, using the iOS 7 SDK. If you are familiar with with 3rd-party library management, just clone [MLPNeuralNet repo](https://github.com/nikolaypavlov/MLPNeuralNet) on Github and import it to XCode directly as a subproject.
 
 ### Step 1. Install CocoaPods
 [CocoaPods](http://cocoapods.org/) is a dependency manager for Objective-C. Installing it is as easy as running the following commands in the terminal:
@@ -87,7 +85,14 @@ $ open App.xcworkspace
 ```
 
 ### Step 4. Import MLPNeuralNet.h
-`#import "MLPNeuralNet.h"` to start working on your model. That's it! 
+`#import "MLPNeuralNet.h"` to start working on your model. That's it!
+
+## Performance benchmark
+In this test the neural net is grown layer by layer from `1 -> 1` configuration to `200 -> 200 -> 200 -> 1`. At each step the output is calculated and benchmarked using random input vector and random weights. Total number of weights grows from 2 to 80601 accordingly. I understand the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propse better one :)
+
+<p align="center" >
+  <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png" alt="MLPNeuralNet performance benchmark" title="MLPNeuralNet performance benchmark">
+</p>
 
 ## Unit Tests
 MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirectory. You can execute them via the "MLPNeuralNet" scheme within Xcode.
@@ -104,7 +109,5 @@ Maintainer: [Mykola Pavlov](http://github.com/nikolaypavlov/) (me@nikolaypavlov.
 
 ## License
 MLPNeuralNet is available under the BSD license. See the LICENSE file for more info.
-
-
 
 > Written with [StackEdit](http://benweet.github.io/stackedit/).
