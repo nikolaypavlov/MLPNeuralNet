@@ -41,7 +41,7 @@
 <h2>
 <a name="why-to-choose-it" class="anchor" href="#why-to-choose-it"><span class="octicon octicon-link"></span></a>Why to choose it?</h2>
 
-<p>Imagine that you created a prediction model in Matlab (Python or R) and want to use it in iOS app. If that's the case, MLPNeuralNet is exactly what you need. It is specifically designed to load and run models in <a href="http://en.wikipedia.org/wiki/Backpropagation#Phase_1:_Propagation">forward propagation</a> mode only.</p>
+<p>Imagine that you created a prediction model in Matlab (Python or R) and want to use it in iOS app. If that's the case, MLPNeuralNet is exactly what you need. It is designed to load and run models in <a href="http://en.wikipedia.org/wiki/Backpropagation#Phase_1:_Propagation">forward propagation</a> mode only.</p>
 
 <h3>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features:</h3>
@@ -55,7 +55,7 @@
 </ul><h2>
 <a name="quick-example" class="anchor" href="#quick-example"><span class="octicon octicon-link"></span></a>Quick Example</h2>
 
-<p>Let's deploy a model for the AND function (<a href="http://en.wikipedia.org/wiki/Logical_conjunction">conjunction</a>) that works as follows: </p>
+<p>Let's deploy a model for the AND function (<a href="http://en.wikipedia.org/wiki/Logical_conjunction">conjunction</a>) that works as follows (of course in real world you don't have to use neural net for this :) </p>
 
 <table>
 <thead><tr>
@@ -91,12 +91,17 @@
   <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/network-arch.png" alt="AND model example" title="AND model example"></p>
 
 <div class="highlight highlight-objectivec"><pre>
-<span class="c1">// Use designated initializer to pass configuration and weights to the model</span>
-<span class="c1">// Note: biased neurons (+1) are always omitted in the configuration</span>
-<span class="n">MLPNeuralNet</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MLPNeuralNet</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithLayerConfig</span><span class="o">:</span><span class="err">@</span><span class="p">[</span><span class="mi">@2</span><span class="p">,</span> <span class="mi">@1</span><span class="p">]</span> 
-                                                        <span class="n">weights</span><span class="o">:</span><span class="err">@</span><span class="p">[</span><span class="err">@</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">@20</span><span class="p">,</span> <span class="mi">@20</span><span class="p">]</span> 
-                                                     <span class="n">outputMode</span><span class="o">:</span><span class="n">MLPClassification</span><span class="p">];</span>
-<span class="c1">// Predict output of the model for data sample</span>
+<span class="c1">// Use designated initializer to pass network configuration and weights </span>
+<span class="c1">// to the model. Note: you don't need to specify biased units (+1 above) in the </span>
+<span class="c1">// configuration.</span>
+<span class="n">NSArray</span> <span class="o">*</span><span class="n">netConfig</span> <span class="o">=</span> <span class="err">@</span><span class="p">[</span><span class="mi">@2</span><span class="p">,</span> <span class="mi">@1</span><span class="p">];</span>
+<span class="kt">double</span> <span class="n">wts</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">};</span>
+<span class="n">NSData</span> <span class="o">*</span><span class="n">weights</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="n">dataWithBytes</span><span class="o">:</span><span class="n">wts</span> <span class="n">length</span><span class="o">:</span><span class="k">sizeof</span><span class="p">(</span><span class="n">wts</span><span class="p">)];</span>
+
+<span class="n">MLPNeuralNet</span> <span class="o">*</span><span class="n">model</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MLPNeuralNet</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithLayerConfig</span><span class="o">:</span><span class="n">netConfig</span>
+                                                        <span class="nl">weights:</span><span class="n">weights</span>
+                                                     <span class="nl">outputMode:</span><span class="n">MLPClassification</span><span class="p">];</span>
+<span class="c1">// Predict output of the model for new sample</span>
 <span class="kt">double</span> <span class="n">sample</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">};</span>
 <span class="n">vector</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSData</span> <span class="n">dataWithBytes</span><span class="o">:</span><span class="n">sample</span> <span class="n">length</span><span class="o">:</span><span class="k">sizeof</span><span class="p">(</span><span class="n">sample</span><span class="p">)];</span>
 <span class="n">prediction</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableData</span> <span class="n">dataWithLength</span><span class="o">:</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">double</span><span class="p">)];</span>
@@ -115,18 +120,25 @@
 <h2>
 <a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
 
-<p>MLPNeuralNet implementation was inspired by <a href="https://www.coursera.org/course/ml">Andrew Ng's Machine Learning course</a> on Coursera.
-Artificial Neural Net image was taken from <a href="http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg">Wikipedia Commons</a></p>
-
-<h2>
+<ul>
+<li>MLPNeuralNet was inspired by <a href="https://www.coursera.org/course/ml">Andrew Ng's course on Machine Learning</a>.</li>
+<li>Neural Network image was taken from <a href="http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg">Wikipedia Commons</a>
+</li>
+</ul><h2>
 <a name="contact" class="anchor" href="#contact"><span class="octicon octicon-link"></span></a>Contact</h2>
 
-<p>Maintainer: <a href="http://github.com/nikolaypavlov/">Mykola Pavlov</a> (<a href="mailto:me@nikolaypavlov.com">me@nikolaypavlov.com</a>)</p>
+<p>Maintainer: <a href="http://github.com/nikolaypavlov/">Mykola Pavlov</a> (<a href="mailto:me@nikolaypavlov.com">me@nikolaypavlov.com</a>).</p>
+
+<p><strong>Please let me know on how you use MLPNeuralNet for some real world problems.</strong></p>
 
 <h2>
 <a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
 <p>MLPNeuralNet is available under the BSD license. See the LICENSE file for more info.</p>
+
+<blockquote>
+<p>Written with <a href="http://benweet.github.io/stackedit/">StackEdit</a>.</p>
+</blockquote>
         </section>
 
         <aside id="sidebar">
