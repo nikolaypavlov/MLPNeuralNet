@@ -9,7 +9,7 @@ Fast [multilayer perceptron](http://en.wikipedia.org/wiki/Multilayer_perceptron)
 </p>
 
 ## Why to choose it?
-Imagine that you created a prediction model in Matlab (Python or R) and want to use it in iOS app. If that's the case, MLPNeuralNet is exactly what you need. It is specifically designed to load and run models in [forward propagation](http://en.wikipedia.org/wiki/Backpropagation#Phase_1:_Propagation) mode only.
+Imagine that you created a prediction model in Matlab (Python or R) and want to use it in iOS app. If that's the case, MLPNeuralNet is exactly what you need. It is designed to load and run models in [forward propagation](http://en.wikipedia.org/wiki/Backpropagation#Phase_1:_Propagation) mode only.
 
 ### Features:
 - [classification](http://en.wikipedia.org/wiki/Binary_classification), [multiclass classification](http://en.wikipedia.org/wiki/Multiclass_classification) and regression output;
@@ -18,7 +18,7 @@ Imagine that you created a prediction model in Matlab (Python or R) and want to 
 - multiple hidden layers or none (in that case it's same as logistic/linear regression)
 
 ## Quick Example
-Let's deploy a model for the AND function ([conjunction](http://en.wikipedia.org/wiki/Logical_conjunction)) that works as follows: 
+Let's deploy a model for the AND function ([conjunction](http://en.wikipedia.org/wiki/Logical_conjunction)) that works as follows (of course in real world you don't have to use neural net for this :) 
 
 |X1 |X2 | Y |
 |:-:|:-:|:-:|
@@ -59,12 +59,14 @@ NSLog(@"Model assessment is %f", assessment[0]);
 MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirectory. You can execute them via the "MLPNeuralNet" scheme within Xcode.
 
 ## Credits
-MLPNeuralNet implementation was inspired by [Andrew Ng's Machine Learning course](https://www.coursera.org/course/ml) on Coursera.
-Artificial Neural Net image was taken from [Wikipedia Commons](http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg)
+* MLPNeuralNet was inspired by [Andrew Ng's course on Machine Learning](https://www.coursera.org/course/ml).
+* Neural Network image was taken from [Wikipedia Commons](http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg)
 
 ## Contact
 
-Maintainer: [Mykola Pavlov](http://github.com/nikolaypavlov/) (me@nikolaypavlov.com)
+Maintainer: [Mykola Pavlov](http://github.com/nikolaypavlov/) (me@nikolaypavlov.com).
+
+**Please let me know on how you use MLPNeuralNet for some real world problems.**
 
 ## License
 MLPNeuralNet is available under the BSD license. See the LICENSE file for more info.
