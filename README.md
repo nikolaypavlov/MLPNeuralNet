@@ -56,7 +56,7 @@ NSLog(@"Model assessment is %f", assessment[0]);
 ```
 
 ## Getting started 
-This instruction describes on how to install MLPNeuralNet using the [CocoaPods](http://cocoapods.org/). It is written for Xcode 5, using the iOS 7 SDK. If you are familiar with with 3rd-party library management, just clone [MLPNeuralNet repo](https://github.com/nikolaypavlov/MLPNeuralNet) on Github and import it to XCode directly as a subproject.
+This instruction describes on how to install MLPNeuralNet using the [CocoaPods](http://cocoapods.org/). It is written for Xcode 5, using the iOS 7 SDK. If you are familiar with 3rd-party library management, just clone [MLPNeuralNet repo](https://github.com/nikolaypavlov/MLPNeuralNet) on Github and import it to XCode directly as a subproject.
 
 ### Step 1. Install CocoaPods
 [CocoaPods](http://cocoapods.org/) is a dependency manager for Objective-C. Installing it is as easy as running the following commands in the terminal:
