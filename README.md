@@ -55,6 +55,40 @@ NSLog(@"Model assessment is %f", assessment[0]);
 
 ```
 
+## Getting started 
+This instruction describes on how to install MLPNeuralNet using the [CocoaPods](http://cocoapods.org/). It is written for Xcode 5, using the iOS 7 SDK.
+
+If you are familiar with with 3rd-party library management, just clone [MLPNeuralNet repo](https://github.com/nikolaypavlov/MLPNeuralNet) on Github and import it to XCode directly as a subproject.
+
+### Step 1. Install CocoaPods
+[CocoaPods](http://cocoapods.org/) is a dependency manager for Objective-C. Installing it is as easy as running the following commands in the terminal:
+```
+$ sudo gem install cocoapods
+$ pod setup
+```
+
+### Step 2. Create Podfile
+List MLPNeuralNet as a dependenciy in a text file named Podfile in your Xcode project directory:
+```
+platform :ios, '7.0'
+pod 'MLPNeuralNet', '~> 1.0.0'
+```
+
+### Step 3. Install MLPNeuralNet
+Now you can install the dependencies in your project:
+```
+$ pod install
+```
+
+Make sure to always open the Xcode workspace (.xcworkspace) instead of the project file when building your project:
+
+```
+$ open App.xcworkspace
+```
+
+### Step 4. Import MLPNeuralNet.h
+`#import "MLPNeuralNet.h"` to start working on your model. That's it! 
+
 ## Unit Tests
 MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirectory. You can execute them via the "MLPNeuralNet" scheme within Xcode.
 
