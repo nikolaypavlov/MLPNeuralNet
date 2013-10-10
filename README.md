@@ -34,12 +34,17 @@ Our model has the following weights and network configuration:
 
 ```objectivec
 
-// Use designated initializer to pass configuration and weights to the model
-// Note: biased neurons (+1) are always omitted in the configuration
-MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:@[@2, @1] 
-                                                        weights:@[@-30, @20, @20] 
+// Use designated initializer to pass network configuration and weights 
+// to the model. Note: you don't need to specify biased units (+1 above) in the 
+// configuration.
+NSArray *netConfig = @[@2, @1];
+double wts[] = {-30, 20, 20};
+NSData *weights = [NSData dataWithBytes:wts length:sizeof(wts)];
+
+MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:netConfig
+                                                        weights:weights
                                                      outputMode:MLPClassification];
-// Predict output of the model for data sample
+// Predict output of the model for new sample
 double sample[] = {0, 1};
 vector = [NSData dataWithBytes:sample length:sizeof(sample)];
 prediction = [NSMutableData dataWithLength:sizeof(double)];
@@ -64,3 +69,6 @@ Maintainer: [Mykola Pavlov](http://github.com/nikolaypavlov/) (me@nikolaypavlov.
 ## License
 MLPNeuralNet is available under the BSD license. See the LICENSE file for more info.
 
+
+
+> Written with [StackEdit](http://benweet.github.io/stackedit/).
