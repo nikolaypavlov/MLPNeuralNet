@@ -113,6 +113,55 @@
 </pre></div>
 
 <h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting started</h2>
+
+<p>This instruction describes on how to install MLPNeuralNet using the <a href="http://cocoapods.org/">CocoaPods</a>. It is written for Xcode 5, using the iOS 7 SDK. If you are familiar with with 3rd-party library management, just clone <a href="https://github.com/nikolaypavlov/MLPNeuralNet">MLPNeuralNet repo</a> on Github and import it to XCode directly as a subproject.</p>
+
+<h3>
+<a name="step-1-install-cocoapods" class="anchor" href="#step-1-install-cocoapods"><span class="octicon octicon-link"></span></a>Step 1. Install CocoaPods</h3>
+
+<p><a href="http://cocoapods.org/">CocoaPods</a> is a dependency manager for Objective-C. Installing it is as easy as running the following commands in the terminal:</p>
+
+<pre><code>$ sudo gem install cocoapods
+$ pod setup
+</code></pre>
+
+<h3>
+<a name="step-2-create-podfile" class="anchor" href="#step-2-create-podfile"><span class="octicon octicon-link"></span></a>Step 2. Create Podfile</h3>
+
+<p>List MLPNeuralNet as a dependenciy in a text file named Podfile in your Xcode project directory:</p>
+
+<pre><code>platform :ios, '7.0'
+pod 'MLPNeuralNet', '~&gt; 1.0.0'
+</code></pre>
+
+<h3>
+<a name="step-3-install-mlpneuralnet" class="anchor" href="#step-3-install-mlpneuralnet"><span class="octicon octicon-link"></span></a>Step 3. Install MLPNeuralNet</h3>
+
+<p>Now you can install the dependencies in your project:</p>
+
+<pre><code>$ pod install
+</code></pre>
+
+<p>Make sure to always open the Xcode workspace (.xcworkspace) instead of the project file when building your project:</p>
+
+<pre><code>$ open App.xcworkspace
+</code></pre>
+
+<h3>
+<a name="step-4-import-mlpneuralneth" class="anchor" href="#step-4-import-mlpneuralneth"><span class="octicon octicon-link"></span></a>Step 4. Import MLPNeuralNet.h</h3>
+
+<p><code>#import "MLPNeuralNet.h"</code> to start working on your model. That's it!</p>
+
+<h2>
+<a name="performance-benchmark" class="anchor" href="#performance-benchmark"><span class="octicon octicon-link"></span></a>Performance benchmark</h2>
+
+<p>In this test the neural net is grown layer by layer from <code>1 -&gt; 1</code> configuration to <code>200 -&gt; 200 -&gt; 200 -&gt; 1</code>. At each step the output is calculated and benchmarked using random input vector and random weights. Total number of weights grows from 2 to 80601 accordingly. I understand the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propse better one :)</p>
+
+<p align="center">
+  <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png" alt="MLPNeuralNet performance benchmark" title="MLPNeuralNet performance benchmark"></p>
+
+<h2>
 <a name="unit-tests" class="anchor" href="#unit-tests"><span class="octicon octicon-link"></span></a>Unit Tests</h2>
 
 <p>MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirectory. You can execute them via the "MLPNeuralNet" scheme within Xcode.</p>
