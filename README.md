@@ -5,7 +5,7 @@
 Fast [multilayer perceptron](http://en.wikipedia.org/wiki/Multilayer_perceptron) neural network library for iOS and Mac OS X. MLPNeuralNet predicts new examples by trained neural network. It is built on top of the [Apple's Accelerate Framework](https://developer.apple.com/library/ios/documentation/Accelerate/Reference/AccelerateFWRef/_index.html), using vectorized operations and hardware acceleration if available.
 
 <p align="center" >
-  <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/500px-Artificial_neural_network.png" alt="Neural Network" title="Neural Network">
+  <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/500px-Artificial_neural_network.png" alt="Neural Network" title="Neural Network" />
 </p>
 
 ## Why to choose it?
@@ -29,7 +29,7 @@ Let's deploy a model for the AND function ([conjunction](http://en.wikipedia.org
 
 Our model has the following weights and network configuration:
 <p align="center" >
-  <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/network-arch.png" alt="AND model example" title="AND model example">
+  <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/network-arch.png" alt="AND model example" title="AND model example" />
 </p>
 
 ```objectivec
@@ -90,9 +90,7 @@ $ open App.xcworkspace
 ## Performance benchmark
 In this test the neural net is grown layer by layer from `1 -> 1` configuration to `200 -> 200 -> 200 -> 1`. At each step the output is calculated and benchmarked using random input vector and random weights. Total number of weights grows from 2 to 80601 accordingly. I understand the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propse better one :)
 
-<p align="center" >
-  <img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png" alt="MLPNeuralNet performance benchmark" title="MLPNeuralNet performance benchmark">
-</p>
+<p align="center"><img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png" alt="MLPNeuralNet performance benchmark" title="MLPNeuralNet performance benchmark" /></p>
 
 ## Unit Tests
 MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirectory. You can execute them via the "MLPNeuralNet" scheme within Xcode.
