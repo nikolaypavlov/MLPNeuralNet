@@ -88,7 +88,7 @@ $ open App.xcworkspace
 `#import "MLPNeuralNet.h"` to start working on your model. That's it!
 
 ## Performance benchmark
-In this test the neural net is grown layer by layer from `1 -> 1` configuration to `200 -> 200 -> 200 -> 1`. At each step the output is calculated and benchmarked using random input vector and random weights. Total number of weights grows from 2 to 80601 accordingly. I understand the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propse better one :)
+In this test the neural net is grown layer by layer from `1 -> 1` configuration to `200 -> 200 -> 200 -> 1`. At each step the output is calculated and benchmarked using random input vector and random weights. Total number of weights grows from 2 to 80601 accordingly. I understand the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose better one :)
 
 <p align="center"><img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png" alt="MLPNeuralNet performance benchmark" title="MLPNeuralNet performance benchmark" /></p>
 
