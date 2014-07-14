@@ -46,11 +46,11 @@ MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:netConfig
                                                      outputMode:MLPClassification];
 // Predict output of the model for new sample
 double sample[] = {0, 1};
-vector = [NSData dataWithBytes:sample length:sizeof(sample)];
-prediction = [NSMutableData dataWithLength:sizeof(double)];
+NSData * vector = [NSData dataWithBytes:sample length:sizeof(sample)];
+NSMutableData * prediction = [NSMutableData dataWithLength:sizeof(double)];
 [model predictByFeatureVector:vector intoPredictionVector:prediction];
 
-double assessment = (double *)prediction.bytes;
+double * assessment = (double *)prediction.bytes;
 NSLog(@"Model assessment is %f", assessment[0]);
 
 ```
