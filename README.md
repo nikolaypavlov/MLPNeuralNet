@@ -96,7 +96,7 @@ In this test the neural net is grown layer by layer from `1 -> 1` configuration 
 MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirectory. You can execute them via the "MLPNeuralNet" scheme within Xcode.
 
 ## Credits
-* MLPNeuralNet was inspired by [Andrew Ng's course on Machine Learning](https://www.coursera.org/course/ml).
+* MLPNeuralNet was inspired by [Andrew Ng's course on Machine Learning](https://www.coursera.org/course/ml)
 * [Jeff Leek course on Data Analysis](https://www.coursera.org/course/dataanalysis)
 * Neural Network image was taken from [Wikipedia Commons](http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg)
 
