@@ -97,6 +97,7 @@ MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirector
 
 ## Credits
 * MLPNeuralNet was inspired by [Andrew Ng's course on Machine Learning](https://www.coursera.org/course/ml).
+* [Jeff Leek course on Data Analysis](https://www.coursera.org/course/dataanalysis)
 * Neural Network image was taken from [Wikipedia Commons](http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg)
 
 ## Contact
