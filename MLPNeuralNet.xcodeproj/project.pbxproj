@@ -268,7 +268,7 @@
 		58D886B81805399E002B43EF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Biomech, Inc";
 				TargetAttributes = {
 					58D886D71805399E002B43EF = {
@@ -511,7 +511,6 @@
 		58D8871218054790002B43EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/MLPNeuralNet.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -533,7 +532,6 @@
 		58D8871318054790002B43EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/MLPNeuralNet.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -552,7 +550,6 @@
 		58D88750180563AC002B43EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -576,7 +573,6 @@
 		58D88751180563AC002B43EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
