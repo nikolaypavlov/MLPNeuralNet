@@ -407,6 +407,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			};
 			name = Debug;
 		};
@@ -453,6 +454,7 @@
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
 				INFOPLIST_FILE = "MLPNeuralNet/MLPNeuralNet-Info.plist";
 				PRODUCT_NAME = MLPNeuralNet;
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
