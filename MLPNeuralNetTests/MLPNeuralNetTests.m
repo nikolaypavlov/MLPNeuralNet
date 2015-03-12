@@ -26,9 +26,16 @@
     NSArray *layersForRModel;
     MLPNeuralNet *modelFromR;
     
+    NSData *wtsForMulticlassModel;
+    NSArray *layersForMulticlassModel;
+    MLPNeuralNet *modelMultclass;
+    
     NSData *vector;
     NSMutableData *prediction;
     double *assessment;
+    
+    NSMutableData *predictionM;
+    double *assessmentM;
 }
 
 @end
@@ -58,8 +65,19 @@
     layersForRModel = [NSArray arrayWithObjects:@6, @10, @1, nil];
     modelFromR = [[MLPNeuralNet alloc] initWithLayerConfig:layersForRModel weights:weightsForRModel outputMode:MLPClassification];
     
+    
+    double wtsMulticlass[] = {3.38869422183494, 2.21275111602689, 0.0364499956405933, -2.83979725768616, -2.84707419013891, -15.9947187643494, 3.95041208835756, 8.31271557337315, -4.70371970234104, -14.568533401802, -8.18033413139586, 35.0666149280761, -34.8853823433816, -5.6715805364208, -0.689952966866256, 11.4263281305969, 7.51887270965955, -30.4760492359728, -20.8005731948335};
+    wtsForMulticlassModel = [NSData dataWithBytes:wtsMulticlass length:sizeof(wtsMulticlass)];
+    layersForMulticlassModel = [NSArray arrayWithObjects:@4, @2, @3, nil];
+    modelMultclass = [[MLPNeuralNet alloc] initWithLayerConfig:layersForMulticlassModel
+                                                     weights:wtsForMulticlassModel
+                                                  outputMode:MLPClassification];
+    
     prediction = [NSMutableData dataWithLength:sizeof(double)];
     assessment = (double *)prediction.bytes;
+    
+    predictionM = [NSMutableData dataWithLength:sizeof(double)*3];
+    assessmentM = (double *)predictionM.bytes;
 }
 
 - (void)tearDown
@@ -177,7 +195,15 @@
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelFromR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0.9999989, 0.0000001);
-    
+}
+
+- (void)testMulticlassModelFromR {
+    double features[] = {4.8, 3.3, 1.3, 0.2};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    [modelMultclass predictByFeatureVector:vector intoPredictionVector:predictionM];
+    XCTAssertEqualWithAccuracy(assessmentM[0], 0.0003350431, 0.0000001);
+    XCTAssertEqualWithAccuracy(assessmentM[1], 0.9937246, 0.0000001);
+    XCTAssertEqualWithAccuracy(assessmentM[2], 0, 0.0000001);
 }
 
 #pragma mark - Number of weigths
