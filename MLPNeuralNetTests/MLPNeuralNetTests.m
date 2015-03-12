@@ -30,6 +30,10 @@
     NSArray *layersForMulticlassModel;
     MLPNeuralNet *modelMultclass;
     
+    NSData *wtsNeurlab;
+    NSArray *layersForNeurolab;
+    MLPNeuralNet *modelNeurolab;
+    
     NSData *vector;
     NSMutableData *prediction;
     double *assessment;
@@ -72,6 +76,13 @@
     modelMultclass = [[MLPNeuralNet alloc] initWithLayerConfig:layersForMulticlassModel
                                                      weights:wtsForMulticlassModel
                                                   outputMode:MLPClassification];
+    
+    double wtsPythonNeuorolab[] = {-2.522616844907733, 1.379419132631195, 2.384441621038408, -4.411649980191586, -0.685608059818619, -10.887683996948859, -3.463033475731954, -3.561827798081323, 6.694420878577903, 5.847634136214969, -3.968908727857065, 8.456453936484778, -22.223450906514095, 8.545523821607908, -14.004325499443924, -16.865896703590984, -10.256283161547678, 3.198517762647665, 20.095491610370658};
+    wtsNeurlab = [NSData dataWithBytes:wtsPythonNeuorolab length:sizeof(wtsPythonNeuorolab)];
+    layersForNeurolab = [NSArray arrayWithObjects:@4, @2, @3, nil];
+    modelNeurolab = [[MLPNeuralNet alloc] initWithLayerConfig:layersForNeurolab
+                                                      weights:wtsNeurlab
+                                                   outputMode:MLPClassification];
     
     prediction = [NSMutableData dataWithLength:sizeof(double)];
     assessment = (double *)prediction.bytes;
@@ -204,6 +215,17 @@
     XCTAssertEqualWithAccuracy(assessmentM[0], 0.0003350431, 0.0000001);
     XCTAssertEqualWithAccuracy(assessmentM[1], 0.9937246, 0.0000001);
     XCTAssertEqualWithAccuracy(assessmentM[2], 0, 0.0000001);
+}
+
+#pragma mark - Python Neurolab compatability
+
+- (void)testPythonNeurolabModel {
+    double features[] = {4.8,  3.3,  1.3,  0.2};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    [modelNeurolab predictByFeatureVector:vector intoPredictionVector:predictionM];
+    XCTAssertEqualWithAccuracy(assessmentM[0], 9.88665737e-01, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM[1], 4.37569362e-03, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM[2], 8.53800274e-04, 0.000000001);
 }
 
 #pragma mark - Number of weigths
