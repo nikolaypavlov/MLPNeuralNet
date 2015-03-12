@@ -92,6 +92,30 @@ In this test the neural net is grown layer by layer from `1 -> 1` configuration 
 
 <p align="center"><img src="http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png" alt="MLPNeuralNet performance benchmark" title="MLPNeuralNet performance benchmark" /></p>
 
+## How to import weights?
+Here is how you can import weights from some of the popular neural network libraries.
+
+### R nnet library:
+
+```r
+# Assuming nnet_model is a trained neural network	 
+nnet_model$wts
+```
+
+### Python Neurolab:
+
+```python
+# Where net argument is an neurolab.core.Net object
+def getweights(net):
+	 vec = []
+	 for layer in net.layers:
+	     b = layer.np['b']
+	     w = layer.np['w']
+	     newvec = np.ravel(concatenate((b, np.ravel(w,order='F'))).reshape((layer.ci+1, layer.cn)), order = 'F')
+	     [vec.append(nv) for nv in newvec]
+	 return np.array(vec)
+```
+
 ## Unit Tests
 MLPNeuralNet includes a suite of unit tests in the MLPNeuralNetTests subdirectory. You can execute them via the "MLPNeuralNet" scheme within Xcode.
 
