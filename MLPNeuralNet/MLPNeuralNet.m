@@ -131,12 +131,30 @@ typedef struct {
         // 3. Apply logistic activation function if needed: http://en.wikipedia.org/wiki/Logistic_function
         if (self.outputMode == MLPClassification) {
             for (int i = 0; i < layer[j].nrow; i++) { // Can we use Taylor's theorem to vectorize this loop?
-                features[i + BIAS_UNIT] = 1 / (1 + exp(-features[i + BIAS_UNIT])); // But skip the bias unit
+                switch (self.activationFunction) {
+                    case MLPSigmoid:
+                        features[i + BIAS_UNIT] = 1 / (1 + exp(-features[i + BIAS_UNIT]));
+                        break;
+                        
+                    case MLPTangent:
+                        features[i + BIAS_UNIT] = tanh(features[i + BIAS_UNIT]);
+                        break;
+                    }
             }
         }
     }
     // 4. Copy an assessment into prediction vector
     memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize);
+}
+
+#pragma mark - Activation Function
+
+- (MLPActivationFunction)activationFunction {
+    if (!_activationFunction) {
+        _activationFunction = MLPSigmoid;
+    }
+    
+    return _activationFunction;
 }
 
 #pragma mark - Misc

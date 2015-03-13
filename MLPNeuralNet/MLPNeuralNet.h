@@ -26,8 +26,13 @@
 // http://en.wikipedia.org/wiki/Logistic_function
 typedef enum {
     MLPRegression,     // Linear output from -Inf to +Inf
-    MLPClassification, // Interval from 0 to 1
+    MLPClassification, // Interval from 0 to 1 for sigmoid and -1 to 1 for tangent
 } MLPOutput;
+
+typedef enum {
+    MLPSigmoid, // the default
+    MLPTangent,
+} MLPActivationFunction;
 
 @interface MLPNeuralNet : NSObject
 
@@ -35,6 +40,7 @@ typedef enum {
 @property (readonly, nonatomic) NSUInteger featureVectorSize; // in bytes
 @property (readonly, nonatomic) NSUInteger predictionVectorSize; // in bytes
 @property (readonly, nonatomic) MLPOutput outputMode;
+@property (nonatomic) MLPActivationFunction activationFunction;
 
 // Designated initializer
 - (id)initWithLayerConfig:(NSArray *)layerConfig // of NSNumbers
