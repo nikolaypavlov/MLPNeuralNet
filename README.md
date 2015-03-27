@@ -105,14 +105,18 @@ nnet_model$wts
 
 ```python
 # Where net argument is an neurolab.core.Net object
+import neurolab as nl
+import numpy as np
+
 def getweights(net):
-	 vec = []
-	 for layer in net.layers:
-	     b = layer.np['b']
-	     w = layer.np['w']
-	     newvec = np.ravel(concatenate((b, np.ravel(w,order='F'))).reshape((layer.ci+1, layer.cn)), order = 'F')
-	     [vec.append(nv) for nv in newvec]
-	 return np.array(vec)
+     vec = []
+     for layer in net.layers:
+         b = layer.np['b']
+         w = layer.np['w']
+         newvec = np.ravel(np.concatenate((b, np.ravel(w,order='F'))).reshape((layer.ci+1, layer.cn)), order = 'F')
+         [vec.append(nv) for nv in newvec]
+     return np.array(vec)
+
 ```
 
 ## Unit Tests
