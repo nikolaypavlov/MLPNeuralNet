@@ -228,6 +228,16 @@
     XCTAssertEqualWithAccuracy(assessmentM[2], 8.53800274e-04, 0.000000001);
 }
 
+- (void)testModelWithTangentOutput {
+    double features[] = {4.8,  3.3,  1.3,  0.2};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    modelNeurolab.activationFunction = MLPTangent;
+    [modelNeurolab predictByFeatureVector:vector intoPredictionVector:predictionM];
+    XCTAssertEqualWithAccuracy(assessmentM[0], 1, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM[1], 0.999999999753, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM[2], -1, 0.000000001);
+}
+
 #pragma mark - Number of weigths
 
 - (void)testNumberOfWeigthsByLayerConfig {
