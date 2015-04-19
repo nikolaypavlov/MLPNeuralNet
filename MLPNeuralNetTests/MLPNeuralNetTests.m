@@ -46,8 +46,7 @@
 
 @implementation MLPNeuralNetTests
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
     double wtsForANDModel[] = {-30.0, 20.0, 20.0};
     weightsForANDModel = [NSData dataWithBytes:wtsForANDModel length:sizeof(wtsForANDModel)];
@@ -91,40 +90,35 @@
     assessmentM = (double *)predictionM.bytes;
 }
 
-- (void)tearDown
-{
+- (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
 #pragma mark - AND model tests
 
-- (void)testModelOfANDOneOne
-{
+- (void)testModelOfANDOneOne {
     double features[] = {1, 1};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
-- (void)testModelOfANDOneZero
-{
+- (void)testModelOfANDOneZero {
     double features[] = {1, 0};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
-- (void)testModelOfANDZeroOne
-{
+- (void)testModelOfANDZeroOne {
     double features[] = {0, 1};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
-- (void)testModelOfANDZeroZero
-{
+- (void)testModelOfANDZeroZero {
     double features[] = {0, 0};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfAND predictByFeatureVector:vector intoPredictionVector:prediction];
@@ -133,32 +127,28 @@
 
 #pragma mark - OR model tests
 
-- (void)testModelOfOROneOne
-{
+- (void)testModelOfOROneOne {
     double features[] = {1, 1};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
-- (void)testModelOfOROneZero
-{
+- (void)testModelOfOROneZero {
     double features[] = {1, 0};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
-- (void)testModelOfORZeroOne
-{
+- (void)testModelOfORZeroOne {
     double features[] = {0, 1};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
-- (void)testModelOfORZeroZero
-{
+- (void)testModelOfORZeroZero {
     double features[] = {0, 0};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfOR predictByFeatureVector:vector intoPredictionVector:prediction];
@@ -167,32 +157,28 @@
 
 #pragma mark - XNOR model tests
 
-- (void)testModelOfXNOROneOne
-{
+- (void)testModelOfXNOROneOne {
     double features[] = {1, 1};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
-- (void)testModelOfXNOROneZero
-{
+- (void)testModelOfXNOROneZero {
     double features[] = {1, 0};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
-- (void)testModelOfXNORZeroOne
-{
+- (void)testModelOfXNORZeroOne {
     double features[] = {0, 1};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
 }
 
-- (void)testModelOfXNORZeroZero
-{
+- (void)testModelOfXNORZeroZero {
     double features[] = {0, 0};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelOfXNOR predictByFeatureVector:vector intoPredictionVector:prediction];

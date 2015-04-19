@@ -130,16 +130,21 @@ typedef struct {
         
         // 3. Apply logistic activation function if needed: http://en.wikipedia.org/wiki/Logistic_function
         if (self.outputMode == MLPClassification) {
-            for (int i = 0; i < layer[j].nrow; i++) { // Can we use Taylor's theorem to vectorize this loop?
-                switch (self.activationFunction) {
-                    case MLPSigmoid:
-                        features[i + BIAS_UNIT] = 1 / (1 + exp(-features[i + BIAS_UNIT]));
-                        break;
-                        
-                    case MLPTangent:
-                        features[i + BIAS_UNIT] = tanh(features[i + BIAS_UNIT]);
-                        break;
-                    }
+            int feature_len = (int)layer[j].nrow;
+            double one = 1.0;
+            double mone = -1.0;
+            
+            switch (self.activationFunction) {
+                case MLPSigmoid:
+                    vDSP_vnegD(&features[1], 1, &features[1], 1, feature_len);
+                    vvexp(&features[1], &features[1], &feature_len);
+                    vDSP_vsaddD(&features[1], 1, &one, &features[1], 1, feature_len);
+                    vvpows(&features[1], &mone, &features[1], &feature_len);
+                    break;
+                    
+                case MLPTangent:
+                    vvtanh(&features[1], &features[1], &feature_len);
+                    break;
             }
         }
     }
