@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/nikolaypavlov/MLPNeuralNet.svg?branch=master)](https://travis-ci.org/nikolaypavlov/MLPNeuralNet)
+[![Join the chat at https://gitter.im/nikolaypavlov/MLPNeuralNet](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nikolaypavlov/MLPNeuralNet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # MLPNeuralNet
 
-[![Join the chat at https://gitter.im/nikolaypavlov/MLPNeuralNet](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nikolaypavlov/MLPNeuralNet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Fast [multilayer perceptron](http://en.wikipedia.org/wiki/Multilayer_perceptron) neural network library for iOS and Mac OS X. MLPNeuralNet predicts new examples by trained neural network. It is built on top of the [Apple's Accelerate Framework](https://developer.apple.com/library/ios/documentation/Accelerate/Reference/AccelerateFWRef/_index.html), using vectorized operations and hardware acceleration if available.
 
 <p align="center" >
