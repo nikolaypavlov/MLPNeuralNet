@@ -20,6 +20,7 @@ typedef struct {
 } MLPLayer;
 
 @interface MLPNeuralNet () {
+    
     NSMutableData *hiddenFeatures;
     NSMutableData *buffer;
     // MLPLayer structures

@@ -32,7 +32,7 @@ typedef enum {
 } MLPOutput;
 
 typedef enum {
-    // The default
+    // Sigmoid is the default
     MLPSigmoid,
     MLPTangent,
 } MLPActivationFunction;
@@ -54,7 +54,7 @@ typedef enum {
 // Vector and prediction buffers should be allocated to work with double precision
 - (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction;
 
-// Number of weigths requred for the neural net of this configuration
+// Number of weights requred for the neural net of this configuration
 + (NSInteger)countWeights:(NSArray *)layerConfig;
 
 @end
