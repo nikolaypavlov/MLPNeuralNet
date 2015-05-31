@@ -60,6 +60,13 @@ The following instructions describe how to setup and install `MLPNeuralNet` usin
 pod 'MLPNeuralNet', '~> 1.0.0'
 ```
 
+##Installing through Carthage
+[Carthage](http://www.github.com/carthage/carthage) is a dependency manager for iOS and OS X projects. Please add the following line to your *Cartfile*.
+
+```
+github "nikolaypavlov/MLPNeuralNet" "master"
+```
+
 ##How many weights do I need to initialise network X->Y->Z?
 Most of the popular libraries (including `MLPNeuralNet`) implicitly add biased units for each of the layers except the last one. Assuming these additional units, the total number of weights are `(X + 1) * Y + (Y + 1) * Z`.
 
