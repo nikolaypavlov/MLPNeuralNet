@@ -25,12 +25,15 @@
 // Type of output. The logistic activitation function is used for classification:
 // http://en.wikipedia.org/wiki/Logistic_function
 typedef enum {
-    MLPRegression,     // Linear output from -Inf to +Inf
-    MLPClassification, // Interval from 0 to 1 for sigmoid and -1 to 1 for tangent
+    // Linear output from -Inf to +Inf
+    MLPRegression,
+    // Interval from 0 to 1 for sigmoid and -1 to 1 for tangent
+    MLPClassification,
 } MLPOutput;
 
 typedef enum {
-    MLPSigmoid, // the default
+    // Sigmoid is the default
+    MLPSigmoid,
     MLPTangent,
 } MLPActivationFunction;
 
@@ -51,7 +54,7 @@ typedef enum {
 // Vector and prediction buffers should be allocated to work with double precision
 - (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction;
 
-// Number of weigths requred for the neural net of this configuration
+// Number of weights requred for the neural net of this configuration
 + (NSInteger)countWeights:(NSArray *)layerConfig;
 
 @end

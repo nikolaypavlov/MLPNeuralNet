@@ -8,20 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		58D886D31805399E002B43EF /* MLPNeuralNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D886D21805399E002B43EF /* MLPNeuralNet.m */; };
-		58D886DA1805399E002B43EF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886D91805399E002B43EF /* XCTest.framework */; };
 		58D886E61805399E002B43EF /* MLPNeuralNetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D886E51805399E002B43EF /* MLPNeuralNetTests.m */; };
 		58D886F518054790002B43EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886F418054790002B43EF /* Foundation.framework */; };
 		58D8871718054A0A002B43EF /* MLPNeuralNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 58D886D11805399E002B43EF /* MLPNeuralNet.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58D8871818054A12002B43EF /* MLPNeuralNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D886D21805399E002B43EF /* MLPNeuralNet.m */; };
 		58D8871A18054A5D002B43EF /* MLPNeuralNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 58D886D11805399E002B43EF /* MLPNeuralNet.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		58D8871E18054E3D002B43EF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D8871D18054E3D002B43EF /* Accelerate.framework */; };
 		58D8872218054E9D002B43EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886F418054790002B43EF /* Foundation.framework */; };
-		58D88740180563AC002B43EF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886D91805399E002B43EF /* XCTest.framework */; };
 		58D8875818056748002B43EF /* MLPNeuralNet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886C11805399E002B43EF /* MLPNeuralNet.framework */; };
 		58D887591805675D002B43EF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D8872018054E80002B43EF /* Accelerate.framework */; };
 		58D8875A18056790002B43EF /* libMLPNeuralNet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D886F318054790002B43EF /* libMLPNeuralNet.a */; };
 		58D8875B180567FD002B43EF /* MLPNeuralNetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D886E51805399E002B43EF /* MLPNeuralNetTests.m */; };
-		58D8875C18056A10002B43EF /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58D8871D18054E3D002B43EF /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,15 +44,12 @@
 		58D886D11805399E002B43EF /* MLPNeuralNet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MLPNeuralNet.h; sourceTree = "<group>"; };
 		58D886D21805399E002B43EF /* MLPNeuralNet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLPNeuralNet.m; sourceTree = "<group>"; };
 		58D886D81805399E002B43EF /* Test.framework.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.framework.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		58D886D91805399E002B43EF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		58D886E11805399E002B43EF /* MLPNeuralNetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MLPNeuralNetTests-Info.plist"; sourceTree = "<group>"; };
 		58D886E51805399E002B43EF /* MLPNeuralNetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MLPNeuralNetTests.m; sourceTree = "<group>"; };
 		58D886F318054790002B43EF /* libMLPNeuralNet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMLPNeuralNet.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		58D886F418054790002B43EF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		58D8871D18054E3D002B43EF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Accelerate.framework; sourceTree = DEVELOPER_DIR; };
 		58D8872018054E80002B43EF /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		58D8873F180563AC002B43EF /* Test.a.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.a.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		58D887541805669D002B43EF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +67,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				58D8875818056748002B43EF /* MLPNeuralNet.framework in Frameworks */,
-				58D886DA1805399E002B43EF /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58D8871E18054E3D002B43EF /* Accelerate.framework in Frameworks */,
 				58D886F518054790002B43EF /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,9 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58D8875C18056A10002B43EF /* Accelerate.framework in Frameworks */,
 				58D8875A18056790002B43EF /* libMLPNeuralNet.a in Frameworks */,
-				58D88740180563AC002B43EF /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,10 +113,7 @@
 		58D886C31805399E002B43EF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				58D887541805669D002B43EF /* Foundation.framework */,
 				58D8872018054E80002B43EF /* Accelerate.framework */,
-				58D8871D18054E3D002B43EF /* Accelerate.framework */,
-				58D886D91805399E002B43EF /* XCTest.framework */,
 				58D886F418054790002B43EF /* Foundation.framework */,
 			);
 			name = Frameworks;

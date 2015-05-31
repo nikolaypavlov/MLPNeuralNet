@@ -12,16 +12,21 @@
 #define BIAS_UNIT 1
 
 typedef struct {
-    NSInteger nrow;      // Number of rows
-    NSInteger ncol;      // Number of columns
+    // Number of rows
+    NSInteger nrow;
+    // Number of columns
+    NSInteger ncol;
     double *weightMatrix;
 } MLPLayer;
 
 @interface MLPNeuralNet () {
+    
     NSMutableData *hiddenFeatures;
     NSMutableData *buffer;
-    NSData *arrayOfLayers; // MLPLayer structures
+    // MLPLayer structures
+    NSData *arrayOfLayers;
 }
+
 @end
 
 @implementation MLPNeuralNet
@@ -70,15 +75,18 @@ typedef struct {
             int totalOffset = 0;
             for (int row = 0; row < layer[j].nrow; row++) {
                 for (int col = 0; col < layer[j].ncol; col++) {
-                    int crossRowOffset = (col + row * (int)layer[j].ncol); // Simulate the matrix using row-major ordering
-                    totalOffset = crossRowOffset + crossLayerOffset;  // Now matrix[offset] corresponds to M[row, col]
+                    // Simulate the matrix using row-major ordering
+                    int crossRowOffset = (col + row * (int)layer[j].ncol);
+                    // Now matrix[offset] corresponds to M[row, col]
+                    totalOffset = crossRowOffset + crossLayerOffset;
                     layer[j].weightMatrix[crossRowOffset] = wts[totalOffset];
                 }
             }
+            
             crossLayerOffset = totalOffset + 1; // Adjust offset to the next layer
         }
-        
     }
+    
     return self;
 }
 
@@ -91,6 +99,7 @@ typedef struct {
 - (void)dealloc {
     // Free weight matrices in each layer
     MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+    
     for (int j = 0; j < self.numberOfLayers - 1; j++) {
         free(layer[j].weightMatrix); layer[j].weightMatrix = NULL;
     }
@@ -114,11 +123,10 @@ typedef struct {
     features[0] = BIAS_VALUE;
     memcpy(&features[1], (double *)vector.bytes, self.featureVectorSize);
     
-    //
     // Forward propagation algorithm
-    //
     double *buf = (double *)buffer.mutableBytes;
     MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+    
     for (int j = 0; j < self.numberOfLayers - 1; j++) {
         
         // 1. Calculate hidden features for current layer j
@@ -148,6 +156,7 @@ typedef struct {
             }
         }
     }
+    
     // 4. Copy an assessment into prediction vector
     memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize);
 }
@@ -168,22 +177,24 @@ typedef struct {
     MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
     NSMutableString *networkArch = [NSMutableString string];
     int numberOfWeights = 0;
+    
     for (int i = 0; i < arrayOfLayers.length / sizeof(MLPLayer); i++) {
         numberOfWeights += layer[i].ncol * layer[i].nrow;
         [networkArch appendFormat:@"%d-", (int)layer[i].ncol - 1];
     }
+    
     [networkArch appendFormat:@"%lu", self.predictionVectorSize / sizeof(double)];
     return [NSString stringWithFormat:@"a %@ network with %d weigths", networkArch, numberOfWeights];
 }
 
 + (NSInteger)countWeights:(NSArray *)layerConfig {
     NSInteger count = 0;
+    
     for (int i = 0; i < layerConfig.count - 1; i++) {
         count += ([layerConfig[i] unsignedIntValue] + 1) * [layerConfig[i+1] unsignedIntValue];
     }
+    
     return count;
 }
-
-
 
 @end
