@@ -33,11 +33,11 @@ Our model has the following weights and network configuration:
 // Use the designated initialiser to pass the network configuration and weights to the model.
 // Note: You do not need to specify the biased units (+1 above) in the configuration.
 
- NSArray *netConfig = @[@2, @1];
+NSArray *netConfig = @[@2, @1];
 double wts[] = {-30, 20, 20};
 NSData *weights = [NSData dataWithBytes:wts length:sizeof(wts)];
 
-`MLPNeuralNet` *model = [[`MLPNeuralNet` alloc] initWithLayerConfig:netConfig
+MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:netConfig
                                                         weights:weights
                                                      outputMode:MLPClassification];
 // Predict output of the model for new sample
@@ -57,7 +57,7 @@ The following instructions describe how to setup and install `MLPNeuralNet` usin
 [CocoaPods](http://cocoapods.org) is a dependency manager for iOS and OS X projects. Please add the following line to your *Podfile*.
 
 ```
-pod '`MLPNeuralNet`', '~> 1.0.0'
+pod 'MLPNeuralNet', '~> 1.0.0'
 ```
 
 ##How many weights do I need to initialise network X->Y->Z?
@@ -93,7 +93,7 @@ def getweights(net):
 ## Performance benchmarks
 In this test, the neural network has grown layer by layer from a `1 -> 1` configuration to a `200 -> 200 -> 200 -> 1` configuration. At each step, the output is calculated and benchmarked using random input vectorisation and weights. Total number of weights grow from 2 to 80601 accordingly. I understand that the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose a better one! :)
 
-![`MLPNeuralNet` Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png)
+![MLPNeuralNet Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png)
 
 ##Unit Testing
 `MLPNeuralNet` includes a diverse suite of unit tests in the `/`MLPNeuralNet`Tests` subdirectory. You can execute them using the ``MLPNeuralNet`` scheme within Xcode.
