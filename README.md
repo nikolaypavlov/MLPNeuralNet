@@ -93,7 +93,7 @@ def getweights(net):
 ## Performance benchmarks
 In this test, the neural network has grown layer by layer from a `1 -> 1` configuration to a `200 -> 200 -> 200 -> 1` configuration. At each step, the output is calculated and benchmarked using random input vectorisation and weights. Total number of weights grow from 2 to 80601 accordingly. I understand that the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose a better one! :)
 
-![MLPNeuralNet Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png")
+![MLPNeuralNet Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png)
 
 ##Unit Testing
 MLPNeuralNet includes a diverse suite of unit tests in the `/MLPNeuralNetTests` subdirectory. You can execute them using the `MLPNeuralNet` scheme within Xcode.
