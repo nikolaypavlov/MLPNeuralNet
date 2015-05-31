@@ -1,4 +1,4 @@
-# `MLPNeuralNet`
+#MLPNeuralNet
 [![Build Status](https://travis-ci.org/nikolaypavlov/MLPNeuralNet.svg?branch=master)](https://travis-ci.org/nikolaypavlov/MLPNeuralNet)
 [![Join the chat at https://gitter.im/nikolaypavlov/MLPNeuralNet](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nikolaypavlov/MLPNeuralNet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
