@@ -25,12 +25,15 @@
 // Type of output. The logistic activitation function is used for classification:
 // http://en.wikipedia.org/wiki/Logistic_function
 typedef enum {
-    MLPRegression,     // Linear output from -Inf to +Inf
-    MLPClassification, // Interval from 0 to 1 for sigmoid and -1 to 1 for tangent
+    // Linear output from -Inf to +Inf
+    MLPRegression,
+    // Interval from 0 to 1 for sigmoid and -1 to 1 for tangent
+    MLPClassification,
 } MLPOutput;
 
 typedef enum {
-    MLPSigmoid, // the default
+    // The default
+    MLPSigmoid,
     MLPTangent,
 } MLPActivationFunction;
 
