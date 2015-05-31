@@ -1,13 +1,13 @@
-# MLPNeuralNet
+# `MLPNeuralNet`
 [![Build Status](https://travis-ci.org/nikolaypavlov/MLPNeuralNet.svg?branch=master)](https://travis-ci.org/nikolaypavlov/MLPNeuralNet)
 [![Join the chat at https://gitter.im/nikolaypavlov/MLPNeuralNet](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nikolaypavlov/MLPNeuralNet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-MLPNeuralNet is a fast [multilayer perceptron](http://en.wikipedia.org/wiki/Multilayer_perceptron) neural network library for iOS and Mac OS X. MLPNeuralNet predicts new examples through trained neural networks. It is built on top of Apple's [Accelerate Framework](https://developer.apple.com/library/ios/documentation/Accelerate/Reference/AccelerateFWRef/_index.html) using vectored operations and hardware acceleration (if available).
+`MLPNeuralNet` is a fast [multilayer perceptron](http://en.wikipedia.org/wiki/Multilayer_perceptron) neural network library for iOS and Mac OS X. `MLPNeuralNet` predicts new examples through trained neural networks. It is built on top of Apple's [Accelerate Framework](https://developer.apple.com/library/ios/documentation/Accelerate/Reference/AccelerateFWRef/_index.html) using vectored operations and hardware acceleration (if available).
 
 ![Neural Network](http://nikolaypavlov.github.io/MLPNeuralNet/images/500px-Artificial_neural_network.png)
 
 ##Why would you use it?
-Imagine that you have engineered a prediction model using Matlab (Python or R) and would like to use it in an iOS application. If that's the case, MLPNeuralNet is exactly what you need. MLPNeuralNet is designed to load and run models in [forward propagation](http://en.wikipedia.org/wiki/Backpropagation#Phase_1:_Propagation) mode only.
+Imagine that you have engineered a prediction model using Matlab (Python or R) and would like to use it in an iOS application. If that's the case, `MLPNeuralNet` is exactly what you need. `MLPNeuralNet` is designed to load and run models in [forward propagation](http://en.wikipedia.org/wiki/Backpropagation#Phase_1:_Propagation) mode only.
 
 ###Features
 - [Classification](http://en.wikipedia.org/wiki/Binary_classification), [Multi-class classification](http://en.wikipedia.org/wiki/Multiclass_classification) and regression output
@@ -37,7 +37,7 @@ Our model has the following weights and network configuration:
 double wts[] = {-30, 20, 20};
 NSData *weights = [NSData dataWithBytes:wts length:sizeof(wts)];
 
-MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:netConfig
+`MLPNeuralNet` *model = [[`MLPNeuralNet` alloc] initWithLayerConfig:netConfig
                                                         weights:weights
                                                      outputMode:MLPClassification];
 // Predict output of the model for new sample
@@ -51,17 +51,17 @@ NSLog(@"Model assessment is %f", assessment[0]);
 ```
 
 ##Getting Started
-The following instructions describe how to setup and install MLPNeuralNet using [CocoaPods](http://cocoapods.org/). It is written for Xcode 5 and the iOS 7.x(+) SDK. If you are not familiar with CocoaPods, just clone the repository and import MLPNeuralNet directly as a subproject.
+The following instructions describe how to setup and install `MLPNeuralNet` using [CocoaPods](http://cocoapods.org/). It is written for Xcode 5 and the iOS 7.x(+) SDK. If you are not familiar with CocoaPods, just clone the repository and import `MLPNeuralNet` directly as a subproject.
 
 ##Installing through CocoaPods
 [CocoaPods](http://cocoapods.org) is a dependency manager for iOS and OS X projects. Please add the following line to your *Podfile*.
 
 ```
-pod 'MLPNeuralNet', '~> 1.0.0'
+pod '`MLPNeuralNet`', '~> 1.0.0'
 ```
 
-##How many weights do I need to initialize network X->Y->Z?
-Most of the popular libraries (including MLPNeuralNet) implicitly add biased units for each of the layers except the last one. Assuming these additional units, the total number of weights are `(X + 1) * Y + (Y + 1) * Z`.
+##How many weights do I need to initialise network X->Y->Z?
+Most of the popular libraries (including `MLPNeuralNet`) implicitly add biased units for each of the layers except the last one. Assuming these additional units, the total number of weights are `(X + 1) * Y + (Y + 1) * Z`.
 
 ##Importing weights from other libs.
 You can do this for *some* of the neural network packages available.
@@ -93,22 +93,25 @@ def getweights(net):
 ## Performance benchmarks
 In this test, the neural network has grown layer by layer from a `1 -> 1` configuration to a `200 -> 200 -> 200 -> 1` configuration. At each step, the output is calculated and benchmarked using random input vectorisation and weights. Total number of weights grow from 2 to 80601 accordingly. I understand that the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose a better one! :)
 
-![MLPNeuralNet Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png)
+![`MLPNeuralNet` Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png)
 
 ##Unit Testing
-MLPNeuralNet includes a diverse suite of unit tests in the `/MLPNeuralNetTests` subdirectory. You can execute them using the `MLPNeuralNet` scheme within Xcode.
+`MLPNeuralNet` includes a diverse suite of unit tests in the `/`MLPNeuralNet`Tests` subdirectory. You can execute them using the ``MLPNeuralNet`` scheme within Xcode.
 
 ##Acknowledgements
-MLPNeuralNet was inspired by:
+`MLPNeuralNet` was inspired by:
+
 *[Andrew Ng's course on Machine Learning](https://www.coursera.org/course/ml).
 * [Jeff Leek course on Data Analysis](https://www.coursera.org/course/dataanalysis)
+
 Credits:
+
 *Neural Network image was taken from [Wikipedia Commons](http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg)
 
 ##Contact Me
 Maintainer: [Mykola Pavlov](http://github.com/nikolaypavlov/) (me@nikolaypavlov.com).
 
-**Please let me know on how you use MLPNeuralNet for some real world problems.**
+**Please let me know on how you use `MLPNeuralNet` for some real world problems.**
 
 ##Licensing
-MLPNeuralNet is released under the BSD license. See the LICENSE file for more information.
+`MLPNeuralNet` is released under the BSD license. See the LICENSE file for more information.
