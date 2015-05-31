@@ -10,8 +10,8 @@ MLPNeuralNet is a fast [multilayer perceptron](http://en.wikipedia.org/wiki/Mult
 Imagine that you have engineered a prediction model using Matlab (Python or R) and would like to use it in an iOS application. If that's the case, MLPNeuralNet is exactly what you need. MLPNeuralNet is designed to load and run models in [forward propagation](http://en.wikipedia.org/wiki/Backpropagation#Phase_1:_Propagation) mode only.
 
 ###Features
-- [Classification](http://en.wikipedia.org/wiki/Binary_classification), [Multiclass classification](http://en.wikipedia.org/wiki/Multiclass_classification) and regression output
-- Vectorized implementaion
+- [Classification](http://en.wikipedia.org/wiki/Binary_classification), [Multi-class classification](http://en.wikipedia.org/wiki/Multiclass_classification) and regression output
+- Vectorised implementation
 - Works with double precision
 - Multiple hidden layers or none (in that case it's same as logistic/linear regression)
 
@@ -30,7 +30,7 @@ Our model has the following weights and network configuration:
 ![AND Model Example](http://nikolaypavlov.github.io/MLPNeuralNet/images/network-arch.png)
 
 ```objective
-// Use the designated initializer to pass the network configuration and weights to the model.
+// Use the designated initialiser to pass the network configuration and weights to the model.
 // Note: You do not need to specify the biased units (+1 above) in the configuration.
 
  NSArray *netConfig = @[@2, @1];
@@ -91,7 +91,7 @@ def getweights(net):
 ```
 
 ## Performance benchmarks
-In this test, the neural network has grown layer by layer from a `1 -> 1` configuration to a `200 -> 200 -> 200 -> 1` configuration. At each step, the output is calculated and benchmarked using random input vectorization and weights. Total number of weights grow from 2 to 80601 accordingly. I understand that the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose a better one! :)
+In this test, the neural network has grown layer by layer from a `1 -> 1` configuration to a `200 -> 200 -> 200 -> 1` configuration. At each step, the output is calculated and benchmarked using random input vectorisation and weights. Total number of weights grow from 2 to 80601 accordingly. I understand that the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose a better one! :)
 
 ![MLPNeuralNet Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png" alt="MLPNeuralNet performance benchmark)
 
