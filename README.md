@@ -67,6 +67,12 @@ Please add the following line to your *Cartfile*.
 github "nikolaypavlov/MLPNeuralNet" "master"
 ```
 
+##Import `MLPNeuralNet.h`
+And do not forget to add the following line to the top of your model:
+```objectivec
+#import "MLPNeuralNet.h"
+```
+
 ##How many weights do I need to initialise network X->Y->Z?
 Most of the popular libraries (including `MLPNeuralNet`) implicitly add biased units for each of the layers except the last one. Assuming these additional units, the total number of weights are `(X + 1) * Y + (Y + 1) * Z`.
 
