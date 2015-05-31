@@ -109,7 +109,7 @@ In this test, the neural network has grown layer by layer from a `1 -> 1` config
 ![MLPNeuralNet Performance Benchmark](http://nikolaypavlov.github.io/MLPNeuralNet/images/mlp-bench-regression-ios.png)
 
 ##Unit Testing
-`MLPNeuralNet` includes a diverse suite of unit tests in the `/`MLPNeuralNet`Tests` subdirectory. You can execute them using the ``MLPNeuralNet`` scheme within Xcode.
+`MLPNeuralNet` includes a diverse suite of unit tests in the `/MLPNeuralNetTests` subdirectory. You can execute them using the ``MLPNeuralNet`` scheme within Xcode.
 
 ##Acknowledgements
 `MLPNeuralNet` was inspired by:
