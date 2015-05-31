@@ -119,10 +119,10 @@ In this test, the neural network has grown layer by layer from a `1 -> 1` config
 
 Credits:
 
-- Neural Network image was taken from [Wikipedia Commons](http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg)
+- Neural Network image was taken from [Wikipedia Commons](http://en.wikipedia.org/wiki/File:Artificial_neural_network.svg).
 
 ##Contact Me
-Maintainer: [Mykola Pavlov](http://github.com/nikolaypavlov/) (me@nikolaypavlov.com).
+Maintainer: [Mykola Pavlov](http://github.com/nikolaypavlov/) (me@nikolaypavlov.com)
 
 **Please let me know on how you use `MLPNeuralNet` for some real world problems.**
 
