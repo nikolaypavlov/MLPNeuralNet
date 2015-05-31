@@ -54,14 +54,14 @@ NSLog(@"Model assessment is %f", assessment[0]);
 The following instructions describe how to setup and install `MLPNeuralNet` using [CocoaPods](http://cocoapods.org/). It is written for Xcode 5 and the iOS 7.x(+) SDK. If you are not familiar with CocoaPods, just clone the repository and import `MLPNeuralNet` directly as a subproject.
 
 ##Installing through CocoaPods
-[CocoaPods](http://cocoapods.org) is a dependency manager for iOS and OS X projects. Please add the following line to your *Podfile*.
+Please add the following line to your *Podfile*.
 
 ```
 pod 'MLPNeuralNet', '~> 1.0.0'
 ```
 
 ##Installing through Carthage
-[Carthage](http://www.github.com/carthage/carthage) is a dependency manager for iOS and OS X projects. Please add the following line to your *Cartfile*.
+Please add the following line to your *Cartfile*.
 
 ```
 github "nikolaypavlov/MLPNeuralNet" "master"
