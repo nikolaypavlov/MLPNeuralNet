@@ -68,7 +68,7 @@ github "nikolaypavlov/MLPNeuralNet" "master"
 ```
 
 ##Import `MLPNeuralNet.h`
-And do not forget to add the following line to the top of your model:
+Do not forget to add the following line to the top of your model:
 ```objectivec
 #import "MLPNeuralNet.h"
 ```
