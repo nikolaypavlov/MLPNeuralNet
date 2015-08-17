@@ -35,6 +35,7 @@ typedef enum {
     // Sigmoid is the default
     MLPSigmoid,
     MLPTangent,
+    MLPReLU, // Rectified Linear Unit, it computes point-wise y=max(0,x)
 } MLPActivationFunction;
 
 @interface MLPNeuralNet : NSObject

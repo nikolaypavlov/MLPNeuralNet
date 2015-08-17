@@ -10,6 +10,7 @@
 
 #define BIAS_VALUE 1.0
 #define BIAS_UNIT 1
+#define ReLU_THR 0.0
 
 typedef struct {
     // Number of rows
@@ -141,6 +142,7 @@ typedef struct {
             int feature_len = (int)layer[j].nrow;
             double one = 1.0;
             double mone = -1.0;
+            double relu_threshold = ReLU_THR;
             
             switch (self.activationFunction) {
                 case MLPSigmoid:
@@ -152,6 +154,10 @@ typedef struct {
                     
                 case MLPTangent:
                     vvtanh(&features[1], &features[1], &feature_len);
+                    break;
+                    
+                case MLPReLU:
+                    vDSP_vthresD(&features[1], 1, &relu_threshold, &features[1], 1, feature_len);
                     break;
             }
         }
