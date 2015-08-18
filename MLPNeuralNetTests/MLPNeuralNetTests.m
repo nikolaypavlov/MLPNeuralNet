@@ -34,6 +34,10 @@
     NSArray *layersForNeurolab;
     MLPNeuralNet *modelNeurolab;
     
+    NSData *wtsForReLUModel;
+    NSArray *layersForReLUModel;
+    MLPNeuralNet *modelWithReLU;
+
     NSData *vector;
     NSMutableData *prediction;
     double *assessment;
@@ -83,6 +87,14 @@
                                                       weights:wtsNeurlab
                                                    outputMode:MLPClassification];
     
+    double wtsForReLU[] = {-1.0, 1.0, 20.0};
+    wtsForReLUModel = [NSData dataWithBytes:wtsForReLU length:sizeof(wtsForReLU)];
+    layersForReLUModel = [NSArray arrayWithObjects:@2, @1, nil];
+    modelWithReLU = [[MLPNeuralNet alloc] initWithLayerConfig:layersForReLUModel
+                                                           weights:wtsForReLUModel
+                                                        outputMode:MLPClassification];
+    modelWithReLU.activationFunction = MLPReLU;
+
     prediction = [NSMutableData dataWithLength:sizeof(double)];
     assessment = (double *)prediction.bytes;
     
@@ -214,6 +226,9 @@
     XCTAssertEqualWithAccuracy(assessmentM[2], 8.53800274e-04, 0.000000001);
 }
 
+
+#pragma mark - Activation functions
+
 - (void)testModelWithTangentOutput {
     double features[] = {4.8,  3.3,  1.3,  0.2};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
@@ -222,6 +237,20 @@
     XCTAssertEqualWithAccuracy(assessmentM[0], 1, 0.000000001);
     XCTAssertEqualWithAccuracy(assessmentM[1], 0.999999999753, 0.000000001);
     XCTAssertEqualWithAccuracy(assessmentM[2], -1, 0.000000001);
+}
+
+- (void)testModelWithReLUBelowThreshold {
+    double features[] = {-1, -1};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    [modelWithReLU predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 0, 0.0001);
+}
+
+- (void)testModelWithReLUAboveThreshold {
+    double features[] = {-1, 1};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    [modelWithReLU predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 18.0, 0.0001);
 }
 
 #pragma mark - Number of weigths
