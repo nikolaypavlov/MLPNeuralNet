@@ -144,7 +144,10 @@ typedef struct {
             double mone = -1.0;
             double relu_threshold = ReLU_THR;
             
-            switch (self.activationFunction) {
+            MLPActivationFunction activation =
+                (j < self.numberOfLayers - 2) ? self.hiddenActivationFunction : self.outputActivationFunction;
+            
+            switch (activation) {
                 case MLPSigmoid:
                     vDSP_vnegD(&features[1], 1, &features[1], 1, feature_len);
                     vvexp(&features[1], &features[1], &feature_len);
@@ -170,11 +173,12 @@ typedef struct {
 #pragma mark - Activation Function
 
 - (MLPActivationFunction)activationFunction {
-    if (!_activationFunction) {
-        _activationFunction = MLPSigmoid;
-    }
-    
-    return _activationFunction;
+    return [self hiddenActivationFunction];
+}
+
+- (void)setActivationFunction: (MLPActivationFunction)activation {
+    _hiddenActivationFunction = activation;
+    _outputActivationFunction = activation;
 }
 
 #pragma mark - Misc
