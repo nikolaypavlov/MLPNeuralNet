@@ -37,6 +37,10 @@
     NSData *wtsForReLUModel;
     NSArray *layersForReLUModel;
     MLPNeuralNet *modelWithReLU;
+    
+    NSData *wtsForReLUSigModel;
+    NSArray *layersForReLUSigModel;
+    MLPNeuralNet *modelWithReLUSig;
 
     NSData *vector;
     NSMutableData *prediction;
@@ -94,6 +98,16 @@
                                                            weights:wtsForReLUModel
                                                         outputMode:MLPClassification];
     modelWithReLU.activationFunction = MLPReLU;
+    
+    double wtsForReLUSig[] = {-1.0, 1.0, 20.0};
+    wtsForReLUSigModel = [NSData dataWithBytes:wtsForReLUSig length:sizeof(wtsForReLUSig)];
+    layersForReLUSigModel = [NSArray arrayWithObjects:@2, @1, nil];
+    modelWithReLUSig = [[MLPNeuralNet alloc] initWithLayerConfig:layersForReLUSigModel
+                                                      weights:wtsForReLUSigModel
+                                                   outputMode:MLPClassification];
+    
+    modelWithReLUSig.hiddenActivationFunction = MLPReLU;
+    modelWithReLUSig.outputActivationFunction = MLPSigmoid;
 
     prediction = [NSMutableData dataWithLength:sizeof(double)];
     assessment = (double *)prediction.bytes;
@@ -251,6 +265,19 @@
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     [modelWithReLU predictByFeatureVector:vector intoPredictionVector:prediction];
     XCTAssertEqualWithAccuracy(assessment[0], 18.0, 0.0001);
+}
+
+- (void)testModelWithDifferentHiddenVsOutputActivation {
+    double features[] = {-1, 1};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    [modelWithReLUSig predictByFeatureVector:vector intoPredictionVector:prediction];
+    XCTAssertEqualWithAccuracy(assessment[0], 1.0, 0.0001);
+}
+
+- (void)testModelSettingsWithDifferentActivations {
+    XCTAssertEqual(modelWithReLUSig.activationFunction, MLPReLU);
+    XCTAssertEqual(modelWithReLUSig.hiddenActivationFunction, MLPReLU);
+    XCTAssertEqual(modelWithReLUSig.outputActivationFunction, MLPSigmoid);
 }
 
 #pragma mark - Number of weigths

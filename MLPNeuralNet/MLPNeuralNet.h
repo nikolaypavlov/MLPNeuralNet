@@ -44,6 +44,8 @@ typedef enum {
 @property (readonly, nonatomic) NSUInteger featureVectorSize; // in bytes
 @property (readonly, nonatomic) NSUInteger predictionVectorSize; // in bytes
 @property (readonly, nonatomic) MLPOutput outputMode;
+@property (nonatomic) MLPActivationFunction hiddenActivationFunction;
+@property (nonatomic) MLPActivationFunction outputActivationFunction;
 @property (nonatomic) MLPActivationFunction activationFunction;
 
 // Designated initializer
