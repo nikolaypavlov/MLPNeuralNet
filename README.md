@@ -103,6 +103,37 @@ def getweights(net):
 
 ```
 
+###Python neon
+```python
+import numpy as np
+
+def layer_names(params):
+    layer_names = params.keys()
+    layer_names.remove('epochs_complete')
+    # Sort layers by their appearance in the model architecture
+    # Since neon appands the index to the layer name we will use it to sort
+    layer_names.sort(key=lambda x: int(x.split("_")[-1]))
+    return layer_names
+
+def getweights(file_name):
+    vec = []
+    # Load a stored model file from disk (should have extension prm)
+    params = pkl.load(open(file_name, 'r'))
+    layers = layer_names(params)
+    
+    for layer in layers:
+        # Make sure our model has biases activated, otherwise add zeros here
+        b = params[layer]['biases']
+        w = params[layer]['weights']
+
+        newvec = np.ravel(np.hstack((b,w)))
+        [vec.append(nv) for nv in newvec]
+    return vec
+
+# An example call
+getweights(expanduser('~/data/workout-dl/workout-ep100.prm'))
+```
+
 ## Performance benchmarks
 In this test, the neural network has grown layer by layer from a `1 -> 1` configuration to a `200 -> 200 -> 200 -> 1` configuration. At each step, the output is calculated and benchmarked using random input vectorisation and weights. Total number of weights grow from 2 to 80601 accordingly. I understand that the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose a better one! :)
 
