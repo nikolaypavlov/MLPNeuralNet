@@ -170,6 +170,80 @@ typedef struct {
     memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize);
 }
 
+- (void)predictByFeatureMatrix:(NSData *)matrix intoPredictionMatrix:(NSMutableData *)prediction {
+    // Number of examples we are going to classify
+    long numExamples = matrix.length / self.featureVectorSize;
+    long numFeatures = self.featureVectorSize / sizeof(double);
+    
+    if (matrix.length != self.featureVectorSize * numExamples) {
+        NSString* error = [NSString stringWithFormat:@"Size of feature matrix invalid (in bytes). Got: %lx Expected: %lx",
+                                      (unsigned long)matrix.length, self.featureVectorSize * numExamples];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:error userInfo:nil];
+    } else if (prediction.length != self.predictionVectorSize * numExamples) {
+        NSString* error = [NSString stringWithFormat:@"Size of prediction matrix invalid (in bytes). Got: %lx Expected: %lx",
+                           (unsigned long)prediction.length, self.predictionVectorSize * numExamples];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:error userInfo:nil];
+    }
+
+    // Create buffers
+    NSMutableData *hiddenFeatureM = [NSMutableData dataWithLength:hiddenFeatures.length * numExamples];
+    NSMutableData *bufferM = [NSMutableData dataWithLength:hiddenFeatures.length * numExamples];
+    
+    double *features = (double *)hiddenFeatureM.mutableBytes;
+    
+    double bias = BIAS_VALUE;
+    
+    // Add the bias unit in the first row
+    vDSP_vfillD(&bias, &features[0], 1, numExamples);
+    
+    // Copy feature-matrix into the buffer. We will transpose the feature matrix to get the
+    // bias units in a row instead of a column for easier updates.
+    vDSP_mtransD((double *)matrix.bytes, 1, &features[numExamples], 1, numFeatures, numExamples);
+    
+    // Forward propagation algorithm
+    double *buf = (double *)bufferM.mutableBytes;
+    MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+    
+    for (int j = 0; j < self.numberOfLayers - 1; j++) {
+        
+        // 1. Calculate hidden features for current layer j
+        vDSP_mmulD(layer[j].weightMatrix, 1, features, 1, &buf[numExamples], 1, layer[j].nrow, numExamples, layer[j].ncol);
+        
+        // 2. Add the bias unit in row 0 and propagate features to the next level
+        vDSP_vfillD(&bias, &buf[0], 1, numExamples);
+        
+        memcpy(features, buf, (layer[j].nrow + BIAS_UNIT) * numExamples * sizeof(double));
+        
+        // 3. Apply activation function, e.g. logistic func: http://en.wikipedia.org/wiki/Logistic_function
+        if (self.outputMode == MLPClassification) {
+            int feature_len = (int)(layer[j].nrow * numExamples);
+            double one = 1.0;
+            double mone = -1.0;
+            double relu_threshold = ReLU_THR;
+            
+            switch (self.activationFunction) {
+                case MLPSigmoid:
+                    vDSP_vnegD(&features[numExamples], 1, &features[numExamples], 1, feature_len);
+                    vvexp(&features[numExamples], &features[numExamples], &feature_len);
+                    vDSP_vsaddD(&features[numExamples], 1, &one, &features[numExamples], 1, feature_len);
+                    vvpows(&features[numExamples], &mone, &features[numExamples], &feature_len);
+                    break;
+                    
+                case MLPTangent:
+                    vvtanh(&features[numExamples], &features[numExamples], &feature_len);
+                    break;
+                    
+                case MLPReLU:
+                    vDSP_vthresD(&features[numExamples], 1, &relu_threshold, &features[numExamples], 1, feature_len);
+                    break;
+            }
+        }
+    }
+    
+    // 4. Copy results into prediction matrix
+    memcpy((double *)prediction.mutableBytes, &features[numExamples], self.predictionVectorSize * numExamples);
+}
+
 #pragma mark - Activation Function
 
 - (MLPActivationFunction)activationFunction {

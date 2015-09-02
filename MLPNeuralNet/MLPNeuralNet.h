@@ -57,6 +57,10 @@ typedef enum {
 // Vector and prediction buffers should be allocated to work with double precision
 - (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction;
 
+// Predicts multiple new examples by feature-matrix and copies the predictions into specified
+// prediction matrix. The predictions buffer should be allocated to work with double precision.
+- (void)predictByFeatureMatrix:(NSData *)matrix intoPredictionMatrix:(NSMutableData *)prediction;
+
 // Number of weights requred for the neural net of this configuration
 + (NSInteger)countWeights:(NSArray *)layerConfig;
 
