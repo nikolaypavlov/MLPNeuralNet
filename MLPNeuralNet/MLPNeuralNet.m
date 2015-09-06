@@ -109,65 +109,91 @@ typedef struct {
 #pragma mark - Prediction
 
 - (void)predictByFeatureVector:(NSData *)vector intoPredictionVector:(NSMutableData *)prediction {
-    if (vector.length < self.featureVectorSize) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"Feature-vector size is less than specified in configuration"
-                                     userInfo:nil];
-    } else if (prediction.length < self.predictionVectorSize) {
-        @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                       reason:@"Prediction vector size is less than specified in configuration"
-                                     userInfo:nil];
+    [self predictByFeatureMatrix:vector intoPredictionMatrix:prediction];
+}
+
+- (void)predictByFeatureMatrix:(NSData *)matrix intoPredictionMatrix:(NSMutableData *)prediction {
+    // Number of examples we are going to classify
+    long numExamples = matrix.length / self.featureVectorSize;
+    long numFeatures = self.featureVectorSize / sizeof(double);
+    
+    if (matrix.length != self.featureVectorSize * numExamples) {
+        NSString* error = [NSString stringWithFormat:@"Size of feature matrix invalid (in bytes). Got: %lx Expected: %lx",
+                                      (unsigned long)matrix.length, self.featureVectorSize * numExamples];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:error userInfo:nil];
+    } else if (prediction.length != self.predictionVectorSize * numExamples) {
+        NSString* error = [NSString stringWithFormat:@"Size of prediction matrix invalid (in bytes). Got: %lx Expected: %lx",
+                           (unsigned long)prediction.length, self.predictionVectorSize * numExamples];
+        @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:error userInfo:nil];
     }
     
-    // Copy feature-vector into buffer and add the bias unit at index 0
-    double *features = (double *)hiddenFeatures.mutableBytes;
-    features[0] = BIAS_VALUE;
-    memcpy(&features[1], (double *)vector.bytes, self.featureVectorSize);
+    MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+    double bias = BIAS_VALUE;
+    
+    double *features;
+    double *buf;
+
+    // Create buffers, reusing buffers where possible
+    if(numExamples == 1){
+        features = (double *)hiddenFeatures.mutableBytes;
+        buf = (double *)buffer.mutableBytes;
+    } else {
+        NSMutableData *hiddenFeatureM = [NSMutableData dataWithLength:hiddenFeatures.length * numExamples];
+        NSMutableData *bufferM = [NSMutableData dataWithLength:hiddenFeatures.length * numExamples];
+        
+        features = (double *)hiddenFeatureM.mutableBytes;
+        buf = (double *)bufferM.mutableBytes;
+    }
+    
+    // Add the bias unit in the first row
+    vDSP_vfillD(&bias, &features[0], 1, numExamples);
+    
+    // Copy feature-matrix into the buffer. We will transpose the feature matrix to get the
+    // bias units in a row instead of a column for easier updates.
+    vDSP_mtransD((double *)matrix.bytes, 1, &features[numExamples], 1, numFeatures, numExamples);
     
     // Forward propagation algorithm
-    double *buf = (double *)buffer.mutableBytes;
-    MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
-    
     for (int j = 0; j < self.numberOfLayers - 1; j++) {
         
         // 1. Calculate hidden features for current layer j
-        vDSP_mmulD(layer[j].weightMatrix, 1, features, 1, &buf[1], 1, layer[j].nrow, 1, layer[j].ncol);
+        vDSP_mmulD(layer[j].weightMatrix, 1, features, 1, &buf[numExamples], 1, layer[j].nrow, numExamples, layer[j].ncol);
         
-        // 2. Add the bias unit at index 0 and propagate features to the next level
-        buf[0] = BIAS_VALUE;
-        memcpy(features, buf, (layer[j].nrow + BIAS_UNIT) * sizeof(double));
+        // 2. Add the bias unit in row 0 and propagate features to the next level
+        vDSP_vfillD(&bias, &buf[0], 1, numExamples);
         
-        // 3. Apply logistic activation function if needed: http://en.wikipedia.org/wiki/Logistic_function
+        memcpy(features, buf, (layer[j].nrow + BIAS_UNIT) * numExamples * sizeof(double));
+        
+        // 3. Apply activation function, e.g. logistic func: http://en.wikipedia.org/wiki/Logistic_function
         if (self.outputMode == MLPClassification) {
-            int feature_len = (int)layer[j].nrow;
+            int feature_len = (int)(layer[j].nrow * numExamples);
             double one = 1.0;
             double mone = -1.0;
             double relu_threshold = ReLU_THR;
             
             MLPActivationFunction activation =
-                (j < self.numberOfLayers - 2) ? self.hiddenActivationFunction : self.outputActivationFunction;
+            (j < self.numberOfLayers - 2) ? self.hiddenActivationFunction : self.outputActivationFunction;
             
             switch (activation) {
                 case MLPSigmoid:
-                    vDSP_vnegD(&features[1], 1, &features[1], 1, feature_len);
-                    vvexp(&features[1], &features[1], &feature_len);
-                    vDSP_vsaddD(&features[1], 1, &one, &features[1], 1, feature_len);
-                    vvpows(&features[1], &mone, &features[1], &feature_len);
+                    vDSP_vnegD(&features[numExamples], 1, &features[numExamples], 1, feature_len);
+                    vvexp(&features[numExamples], &features[numExamples], &feature_len);
+                    vDSP_vsaddD(&features[numExamples], 1, &one, &features[numExamples], 1, feature_len);
+                    vvpows(&features[numExamples], &mone, &features[numExamples], &feature_len);
                     break;
                     
                 case MLPTangent:
-                    vvtanh(&features[1], &features[1], &feature_len);
+                    vvtanh(&features[numExamples], &features[numExamples], &feature_len);
                     break;
                     
                 case MLPReLU:
-                    vDSP_vthresD(&features[1], 1, &relu_threshold, &features[1], 1, feature_len);
+                    vDSP_vthresD(&features[numExamples], 1, &relu_threshold, &features[numExamples], 1, feature_len);
                     break;
             }
         }
     }
     
-    // 4. Copy an assessment into prediction vector
-    memcpy((double *)prediction.mutableBytes, &features[1], self.predictionVectorSize);
+    // 4. Copy results into prediction matrix
+    memcpy((double *)prediction.mutableBytes, &features[numExamples], self.predictionVectorSize * numExamples);
 }
 
 #pragma mark - Activation Function

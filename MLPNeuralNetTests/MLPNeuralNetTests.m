@@ -45,9 +45,14 @@
     NSData *vector;
     NSMutableData *prediction;
     double *assessment;
+
+    NSData *twoBinaryFeatures;
     
-    NSMutableData *predictionM;
-    double *assessmentM;
+    NSMutableData *predictionM3;
+    double *assessmentM3;
+    
+    NSMutableData *predictionM4;
+    double *assessmentM4;
 }
 
 @end
@@ -109,11 +114,21 @@
     modelWithReLUSig.hiddenActivationFunction = MLPReLU;
     modelWithReLUSig.outputActivationFunction = MLPSigmoid;
 
+    double features[] = {
+        1, 1,
+        1, 0,
+        0, 1,
+        0, 0};
+    twoBinaryFeatures = [NSData dataWithBytes:features length:sizeof(features)];
+    
     prediction = [NSMutableData dataWithLength:sizeof(double)];
     assessment = (double *)prediction.bytes;
     
-    predictionM = [NSMutableData dataWithLength:sizeof(double)*3];
-    assessmentM = (double *)predictionM.bytes;
+    predictionM3 = [NSMutableData dataWithLength:sizeof(double)*3];
+    assessmentM3 = (double *)predictionM3.bytes;
+    
+    predictionM4 = [NSMutableData dataWithLength:sizeof(double)*4];
+    assessmentM4 = (double *)predictionM4.bytes;
 }
 
 - (void)tearDown {
@@ -211,6 +226,37 @@
     XCTAssertEqualWithAccuracy(assessment[0], 1, 0.0001);
 }
 
+#pragma mark - AND matrix model tests
+
+- (void)testModelOfANDMatrix {
+    [modelOfAND predictByFeatureMatrix:twoBinaryFeatures intoPredictionMatrix:predictionM4];
+    XCTAssertEqualWithAccuracy(assessmentM4[0], 1, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[1], 0, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[2], 0, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[3], 0, 0.0001);
+}
+
+#pragma mark - OR matrix model tests
+
+- (void)testModelOfORMatrix {
+    [modelOfOR predictByFeatureMatrix:twoBinaryFeatures intoPredictionMatrix:predictionM4];
+    XCTAssertEqualWithAccuracy(assessmentM4[0], 1, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[1], 1, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[2], 1, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[3], 0, 0.0001);
+}
+
+
+#pragma mark - XNOR matrix model tests
+
+- (void)testModelOfXNORMatrix {
+    [modelOfXNOR predictByFeatureMatrix:twoBinaryFeatures intoPredictionMatrix:predictionM4];
+    XCTAssertEqualWithAccuracy(assessmentM4[0], 1, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[1], 0, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[2], 0, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM4[3], 1, 0.0001);
+}
+
 #pragma mark - R model portability
 
 - (void)testPortabilityofModelFromR {
@@ -223,10 +269,10 @@
 - (void)testMulticlassModelFromR {
     double features[] = {4.8, 3.3, 1.3, 0.2};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
-    [modelMultclass predictByFeatureVector:vector intoPredictionVector:predictionM];
-    XCTAssertEqualWithAccuracy(assessmentM[0], 0.0003350431, 0.0000001);
-    XCTAssertEqualWithAccuracy(assessmentM[1], 0.9937246, 0.0000001);
-    XCTAssertEqualWithAccuracy(assessmentM[2], 0, 0.0000001);
+    [modelMultclass predictByFeatureVector:vector intoPredictionVector:predictionM3];
+    XCTAssertEqualWithAccuracy(assessmentM3[0], 0.0003350431, 0.0000001);
+    XCTAssertEqualWithAccuracy(assessmentM3[1], 0.9937246, 0.0000001);
+    XCTAssertEqualWithAccuracy(assessmentM3[2], 0, 0.0000001);
 }
 
 #pragma mark - Python Neurolab compatability
@@ -234,10 +280,10 @@
 - (void)testPythonNeurolabModel {
     double features[] = {4.8,  3.3,  1.3,  0.2};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
-    [modelNeurolab predictByFeatureVector:vector intoPredictionVector:predictionM];
-    XCTAssertEqualWithAccuracy(assessmentM[0], 9.88665737e-01, 0.000000001);
-    XCTAssertEqualWithAccuracy(assessmentM[1], 4.37569362e-03, 0.000000001);
-    XCTAssertEqualWithAccuracy(assessmentM[2], 8.53800274e-04, 0.000000001);
+    [modelNeurolab predictByFeatureVector:vector intoPredictionVector:predictionM3];
+    XCTAssertEqualWithAccuracy(assessmentM3[0], 9.88665737e-01, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM3[1], 4.37569362e-03, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM3[2], 8.53800274e-04, 0.000000001);
 }
 
 
@@ -247,10 +293,10 @@
     double features[] = {4.8,  3.3,  1.3,  0.2};
     vector = [NSData dataWithBytes:features length:sizeof(features)];
     modelNeurolab.activationFunction = MLPTangent;
-    [modelNeurolab predictByFeatureVector:vector intoPredictionVector:predictionM];
-    XCTAssertEqualWithAccuracy(assessmentM[0], 1, 0.000000001);
-    XCTAssertEqualWithAccuracy(assessmentM[1], 0.999999999753, 0.000000001);
-    XCTAssertEqualWithAccuracy(assessmentM[2], -1, 0.000000001);
+    [modelNeurolab predictByFeatureVector:vector intoPredictionVector:predictionM3];
+    XCTAssertEqualWithAccuracy(assessmentM3[0], 1, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM3[1], 0.999999999753, 0.000000001);
+    XCTAssertEqualWithAccuracy(assessmentM3[2], -1, 0.000000001);
 }
 
 - (void)testModelWithReLUBelowThreshold {
