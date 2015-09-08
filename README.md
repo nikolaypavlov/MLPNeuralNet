@@ -50,6 +50,35 @@ double * assessment = (double *)prediction.bytes;
 NSLog(@"Model assessment is %f", assessment[0]);
 ```
 
+##Extended Example
+Let's say you trained a net using pybrain or even your own home brewed implementation.
+
+![Extended Example](http://i.imgur.com/v2kMTUH.png)
+
+```objective
+// Use the designated initialiser to pass the network configuration and weights to the model.
+// Note: You do not need to specify the biased units (+1 above) in the configuration.
+
+NSArray *netConfig = @[@3, @2, @1];
+double wts[] = {b1, w1, w2, w3, b2, w4, w5, w6, b3, w7, w8};
+NSData *weights = [NSData dataWithBytes:wts length:sizeof(wts)];
+
+MLPNeuralNet *model = [[MLPNeuralNet alloc] initWithLayerConfig:netConfig
+                                                        weights:weights
+                                                     outputMode:MLPClassification];
+model.hiddenActivationFunction = MLPSigmoid;
+model.outputActivationFunction = MLPNone;
+
+// Predict output of the model for new sample
+double sample[] = {0, 1, 2};
+NSData * vector = [NSData dataWithBytes:sample length:sizeof(sample)];
+NSMutableData * prediction = [NSMutableData dataWithLength:sizeof(double)];
+[model predictByFeatureVector:vector intoPredictionVector:prediction];
+
+double * assessment = (double *)prediction.bytes;
+NSLog(@"Model assessment is %f", assessment[0]);
+```
+
 ##Getting Started
 The following instructions describe how to setup and install `MLPNeuralNet` using [CocoaPods](http://cocoapods.org/). It is written for Xcode 5 and the iOS 7.x(+) SDK. If you are not familiar with CocoaPods, just clone the repository and import `MLPNeuralNet` directly as a subproject.
 
