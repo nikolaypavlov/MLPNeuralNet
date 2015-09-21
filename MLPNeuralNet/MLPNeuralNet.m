@@ -188,6 +188,8 @@ typedef struct {
                 case MLPReLU:
                     vDSP_vthresD(&features[numExamples], 1, &relu_threshold, &features[numExamples], 1, feature_len);
                     break;
+                case MLPNone:
+                    break;
             }
         }
     }

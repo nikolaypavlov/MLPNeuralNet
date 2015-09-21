@@ -36,6 +36,7 @@ typedef enum {
     MLPSigmoid,
     MLPTangent,
     MLPReLU, // Rectified Linear Unit, it computes point-wise y=max(0,x)
+    MLPNone,
 } MLPActivationFunction;
 
 @interface MLPNeuralNet : NSObject
