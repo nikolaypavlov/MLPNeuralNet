@@ -254,7 +254,7 @@
 		58D886B81805399E002B43EF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Biomech, Inc";
 				TargetAttributes = {
 					58D886D71805399E002B43EF = {
@@ -374,6 +374,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -439,6 +440,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
 				INFOPLIST_FILE = "MLPNeuralNet/MLPNeuralNet-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.biomech.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MLPNeuralNet;
 				SUPPORTED_PLATFORMS = "macosx iphonesimulator";
 				WRAPPER_EXTENSION = framework;
@@ -455,6 +457,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
 				INFOPLIST_FILE = "MLPNeuralNet/MLPNeuralNet-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.biomech.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MLPNeuralNet;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -475,6 +478,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.biomech.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -491,6 +495,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
 				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.biomech.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -499,6 +504,10 @@
 		58D8871218054790002B43EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					x86_64,
+				);
 				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/MLPNeuralNet.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -513,6 +522,7 @@
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PRODUCT_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64";
 				WRAPPER_EXTENSION = a;
 			};
 			name = Debug;
@@ -520,6 +530,10 @@
 		58D8871318054790002B43EF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					x86_64,
+				);
 				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/MLPNeuralNet.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -531,6 +545,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64";
 				WRAPPER_EXTENSION = a;
 			};
 			name = Release;
@@ -539,11 +554,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -552,6 +563,7 @@
 				);
 				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "us.biomech.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Test.a;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = xctest;
@@ -562,15 +574,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MLPNeuralNet/MLPNeuralNet-Prefix.pch";
 				INFOPLIST_FILE = "MLPNeuralNetTests/MLPNeuralNetTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "us.biomech.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Test.a;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
