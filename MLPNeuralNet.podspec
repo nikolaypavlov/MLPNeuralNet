@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 
   s.name         = "MLPNeuralNet"
-  s.version      = "1.0.7"
+  s.version      = "1.0.9"
   s.summary      = "Fast multilayer perceptron neural net for iOS and Mac OS X"
   s.license      = { :type => 'BSD' }
   s.author       = { "Mykola Pavlov" => "me@nikolaypavlov.com" }
-  s.source       = { :git => "https://github.com/nikolaypavlov/MLPNeuralNet.git", :tag => "1.0.7" }
+  s.source       = { :git => "https://github.com/nikolaypavlov/MLPNeuralNet.git", :tag => "1.0.9" }
   s.homepage     = "http://nikolaypavlov.github.io/MLPNeuralNet/"
   s.screenshots  = "http://nikolaypavlov.github.io/MLPNeuralNet/images/500px-Artificial_neural_network.png"
 
@@ -22,8 +22,8 @@ Pod::Spec.new do |s|
                    DESC
 
 
-  s.ios.deployment_target = '7.0'
-  s.osx.deployment_target = '10.8'
+  s.ios.deployment_target = '9.0'
+  s.osx.deployment_target = '10.11'
 
   s.source_files = "MLPNeuralNet/*.{h,m}"
   s.frameworks = 'Accelerate'
