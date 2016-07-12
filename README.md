@@ -163,8 +163,6 @@ def getweights(file_name):
 getweights(expanduser('~/data/workout-dl/workout-ep100.prm'))
 ```
 
-```
-
 ###Python keras
 ```python
 import numpy as np
