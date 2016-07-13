@@ -188,6 +188,20 @@ typedef struct {
                 case MLPReLU:
                     vDSP_vthresD(&features[numExamples], 1, &relu_threshold, &features[numExamples], 1, feature_len);
                     break;
+                    
+                case MLPSoftmax: {
+                    // subtract maximum input to avoid overflow.
+                    double max_input = 0;
+                    vDSP_maxvD(&features[numExamples], 1, &max_input, feature_len);
+                    max_input *= -1;
+                    vDSP_vsaddD(&features[numExamples], 1, &max_input, &features[numExamples], 1, feature_len);
+                    
+                    vvexp(&features[numExamples], &features[numExamples], &feature_len);
+                    double sum_exp = 0;
+                    vDSP_sveD(&features[numExamples], 1, &sum_exp, feature_len);
+                    vDSP_vsdivD(&features[numExamples], 1, &sum_exp, &features[numExamples], 1, feature_len);
+                    break;
+                }
                 case MLPNone:
                     break;
             }

@@ -42,6 +42,10 @@
     NSArray *layersForReLUSigModel;
     MLPNeuralNet *modelWithReLUSig;
 
+    NSData *wtsForReLUSoftmaxModel;
+    NSArray *layersForReLUSoftmaxModel;
+    MLPNeuralNet *modelWithReLUSoftmax;
+    
     NSData *vector;
     NSMutableData *prediction;
     double *assessment;
@@ -113,6 +117,16 @@
     
     modelWithReLUSig.hiddenActivationFunction = MLPReLU;
     modelWithReLUSig.outputActivationFunction = MLPSigmoid;
+    
+    double wtsForeLUSoftmax[] = {0.0, 1.1093217, -0.29420424, 0.0, 0.40102676, 0.048761927,
+                                 0.0, 0.18262321, 0.16701823, 0.0, -0.014809706, 0.81076205};
+    wtsForReLUSoftmaxModel = [NSData dataWithBytes:wtsForeLUSoftmax length:sizeof(wtsForeLUSoftmax)];
+    layersForReLUSoftmaxModel = [NSArray arrayWithObjects:@2, @2, @2, nil];
+    modelWithReLUSoftmax = [[MLPNeuralNet alloc] initWithLayerConfig:layersForReLUSoftmaxModel
+                                                             weights:wtsForReLUSoftmaxModel
+                                                          outputMode:MLPClassification];
+    modelWithReLUSoftmax.hiddenActivationFunction = MLPReLU;
+    modelWithReLUSoftmax.outputActivationFunction = MLPSoftmax;
 
     double features[] = {
         1, 1,
@@ -359,6 +373,19 @@
     XCTAssertThrowsSpecificNamed([[MLPNeuralNet alloc] initWithLayerConfig:layerCfg weights:weights outputMode:MLPRegression],
                                  NSException,
                                  @"NSInternalInconsistencyException");
+}
+
+- (void)testSoftmaxOutputLayer {
+    double features[] = {-1, 10};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    
+    NSMutableData* predictionM2 = [NSMutableData dataWithLength:sizeof(double)*2];
+    double* assessmentM2 = (double *)predictionM2.bytes;
+    
+    [modelWithReLUSoftmax predictByFeatureMatrix:vector intoPredictionMatrix:predictionM2];
+    XCTAssertEqualWithAccuracy(assessmentM2[0], 0.48606774, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM2[1], 0.51393223, 0.0001);
+
 }
 
 @end

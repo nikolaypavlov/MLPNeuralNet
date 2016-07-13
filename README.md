@@ -163,6 +163,22 @@ def getweights(file_name):
 getweights(expanduser('~/data/workout-dl/workout-ep100.prm'))
 ```
 
+###Python keras
+```python
+import numpy as np
+
+def get_weights_from_keras_model(model):
+    vec = np.array([])
+    for i in xrange(0, len(model.get_weights()), 2):
+        bias = model.get_weights()[i + 1]
+        weights_matrix = model.get_weights()[i]
+
+        newvec = np.ravel(np.concatenate((bias.reshape(-1, 1), weights_matrix.T), axis=1))
+        vec = np.append(vec, newvec)
+    return np.array(vec)
+
+```
+
 ## Performance benchmarks
 In this test, the neural network has grown layer by layer from a `1 -> 1` configuration to a `200 -> 200 -> 200 -> 1` configuration. At each step, the output is calculated and benchmarked using random input vectorisation and weights. Total number of weights grow from 2 to 80601 accordingly. I understand that the test is quite synthetic, but I hope it illustrates the performance. I will be happy if you can propose a better one! :)
 
