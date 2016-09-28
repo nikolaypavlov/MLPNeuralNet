@@ -40,20 +40,33 @@ typedef enum {
     MLPNone,
 } MLPActivationFunction;
 
+typedef enum {
+    // Dense is the default
+    MLPLayerDense,
+    MLPLayerBatchNormalization,
+} MlPLayerType;
+
 @interface MLPNeuralNet : NSObject
 
 @property (readonly, nonatomic) NSUInteger numberOfLayers;
 @property (readonly, nonatomic) NSUInteger featureVectorSize; // in bytes
 @property (readonly, nonatomic) NSUInteger predictionVectorSize; // in bytes
 @property (readonly, nonatomic) MLPOutput outputMode;
+// sequence of MLPLayerType identifyers; by default all are MLPLayerDense
+@property (readonly, nonatomic) NSMutableArray* layersTypes;
 @property (nonatomic) MLPActivationFunction hiddenActivationFunction;
 @property (nonatomic) MLPActivationFunction outputActivationFunction;
 @property (nonatomic) MLPActivationFunction activationFunction;
 
-// Designated initializer
+// Designated initializers
 - (id)initWithLayerConfig:(NSArray *)layerConfig // of NSNumbers
                   weights:(NSData *)weights      // of double
                outputMode:(MLPOutput)outputMode;
+
+- (id)initWithLayerConfigAndLayerType:(NSArray *)layerConfig // of NSNumbers
+                              weights:(NSData *)weights      // of double
+                           layerTypes:(NSMutableArray*)layerTypes // of MLPLayerType
+                           outputMode:(MLPOutput)outputMode;
 
 // Predicts new examples by feature-vector and copies the prediction into specified buffer
 // Vector and prediction buffers should be allocated to work with double precision
@@ -64,6 +77,8 @@ typedef enum {
 - (void)predictByFeatureMatrix:(NSData *)matrix intoPredictionMatrix:(NSMutableData *)prediction;
 
 // Number of weights requred for the neural net of this configuration
-+ (NSInteger)countWeights:(NSArray *)layerConfig;
++ (NSInteger)countWeights:(NSArray *)layerConfig
+               layersTypes:(NSMutableArray*)layersTypes;
++ (NSInteger)countWeights:(NSArray *)layerConfig __deprecated_msg("use method countWeights(layerConfig, layerTypes) instead");
 
 @end

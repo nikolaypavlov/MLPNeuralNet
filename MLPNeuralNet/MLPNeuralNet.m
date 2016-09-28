@@ -13,15 +13,12 @@
 #define ReLU_THR 0.0
 
 typedef struct {
-    // Number of rows
-    NSInteger nrow;
-    // Number of columns
-    NSInteger ncol;
+    NSInteger nrow;  // Number of rows
+    NSInteger ncol;  // Number of columns
     double *weightMatrix;
 } MLPLayer;
 
 @interface MLPNeuralNet () {
-    
     NSMutableData *hiddenFeatures;
     NSMutableData *buffer;
     // MLPLayer structures
@@ -40,17 +37,24 @@ typedef struct {
                outputMode:(MLPOutput)outputMode {
     self = [super init];
     if (self) {
-        if ([self.class countWeights:layerConfig] != weights.length / sizeof(double)) {
+        _numberOfLayers = layerConfig.count;
+        
+        // set MLPLayerDense identifier for each layer except the first one
+        _layersTypes = [[NSMutableArray alloc] initWithCapacity:_numberOfLayers];
+        for (NSUInteger n = 0; n < _numberOfLayers - 1; ++n) {
+            [_layersTypes addObject:[NSNumber numberWithInteger:MLPLayerDense]];
+        }
+        
+        if ([self.class countWeights:layerConfig layersTypes:_layersTypes] != weights.length / sizeof(double)) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                            reason:@"Number of weights doesn't match to configuration"
                                          userInfo:nil];
         }
         
-        _numberOfLayers = layerConfig.count;
         _featureVectorSize = [layerConfig[0] unsignedIntegerValue] * sizeof(double);
         _predictionVectorSize = [layerConfig.lastObject unsignedIntegerValue] * sizeof(double);
         _outputMode = outputMode;
-        
+
         // Allocate buffers of the maximum possible vector size, there should be a place for bias unit also.
         unsigned maxVectorLength = [[layerConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
         hiddenFeatures = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
@@ -60,7 +64,7 @@ typedef struct {
         // the input layer, so the total size is equal to number of layers - 1.
         arrayOfLayers = [NSMutableData dataWithLength:(_numberOfLayers - 1) * sizeof(MLPLayer)];
         
-        // Allocate memory for the wigth matrices and initialize them.
+        // Allocate memory for the weigth matrices and initialize them.
         MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
         double *wts = (double *)weights.bytes;
         int crossLayerOffset = 0; // An offset between the weight matrices of different layers
@@ -90,6 +94,82 @@ typedef struct {
     
     return self;
 }
+
+- (id)initWithLayerConfigAndLayerType:(NSArray *)layerConfig // of NSNumbers
+                              weights:(NSData *)weights      // of double
+                           layerTypes:(NSMutableArray*)layerTypes // of MLPLayerType
+                           outputMode:(MLPOutput)outputMode; {
+    self = [super init];
+    if (self) {
+        _layersTypes = layerTypes;
+        if ([self.class countWeights:layerConfig layersTypes:_layersTypes] != weights.length / sizeof(double)) {
+            @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                           reason:@"Number of weights doesn't match to configuration"
+                                         userInfo:nil];
+        }
+        
+        _numberOfLayers = layerConfig.count;
+        _featureVectorSize = [layerConfig[0] unsignedIntegerValue] * sizeof(double);
+        _predictionVectorSize = [layerConfig.lastObject unsignedIntegerValue] * sizeof(double);
+        _outputMode = outputMode;
+        
+        // Allocate buffers of the maximum possible vector size, there should be a place for bias unit also.
+        unsigned maxVectorLength = [[layerConfig valueForKeyPath:@"@max.self"] unsignedIntValue] + BIAS_UNIT;
+        hiddenFeatures = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
+        buffer = [NSMutableData dataWithLength:maxVectorLength * sizeof(double)];
+        
+        // Allocate memory for layers. Note that we don't need a matrix for
+        // the input layer, so the total size is equal to number of layers - 1.
+        arrayOfLayers = [NSMutableData dataWithLength:(_numberOfLayers - 1) * sizeof(MLPLayer)];
+        
+        // Allocate memory for the weigth matrices and initialize them.
+        MLPLayer *layer = (MLPLayer *)arrayOfLayers.bytes;
+        double *wts = (double *)weights.bytes;
+        int crossLayerOffset = 0; // An offset between the weight matrices of different layers
+        for (int layer_index = 0; layer_index < _numberOfLayers - 1; layer_index++) { // Recall we don't need a matrix for the input layer
+            if ([_layersTypes[layer_index] isEqualToNumber:@(MLPLayerDense)]) {
+                // If network has X units in layer j, and Y units in layer j+1, then weight matrix for layer j
+                // will be of demension: [ Y x (X+1) ]
+                layer[layer_index].nrow = [layerConfig[layer_index+1] unsignedIntegerValue];
+                layer[layer_index].ncol = [layerConfig[layer_index] unsignedIntegerValue] + 1; // +1 for BIAS_UNIT
+                layer[layer_index].weightMatrix = calloc(layer[layer_index].nrow * layer[layer_index].ncol, sizeof(double));
+                NSAssert(layer[layer_index].weightMatrix != NULL, @"Out of memory for weight matrices");
+                
+                int totalOffset = 0;
+                for (int row = 0; row < layer[layer_index].nrow; row++) {
+                    for (int col = 0; col < layer[layer_index].ncol; col++) {
+                        // Simulate the matrix using row-major ordering
+                        int crossRowOffset = (col + row * (int)layer[layer_index].ncol);
+                        // Now matrix[offset] corresponds to M[row, col]
+                        totalOffset = crossRowOffset + crossLayerOffset;
+                        layer[layer_index].weightMatrix[crossRowOffset] = wts[totalOffset];
+                    }
+                }
+                
+                crossLayerOffset = totalOffset + 1; // Adjust offset to the next layer
+            } else if ([_layersTypes[layer_index] isEqualToNumber:@(MLPLayerBatchNormalization)]) {
+                layer[layer_index].ncol = layer[layer_index].nrow = [layerConfig[layer_index] unsignedIntegerValue];
+                layer[layer_index].weightMatrix = calloc(layer[layer_index].nrow * 4, sizeof(double));
+                NSAssert(layer[layer_index].weightMatrix != NULL, @"Out of memory for weight matrices");
+                
+                // the order is gamma, beta, running_mean, running_std
+                for (int row_index = 0; row_index < layer[layer_index].nrow * 4; ++row_index) {
+                    layer[layer_index].weightMatrix[row_index] = wts[crossLayerOffset + row_index];
+                }
+                crossLayerOffset += layer[layer_index].nrow * 4;
+                
+
+            } else {
+                NSString* error = [NSString stringWithFormat:@"Unsupported layer identifyer. Got: %@",
+                                   _layersTypes[layer_index]];
+                @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:error userInfo:nil];
+            }
+        }
+    }
+    
+    return self;
+}
+
 
 - (id)init {
     @throw [NSException exceptionWithName:@"MLPNeuralNet init"
@@ -153,25 +233,50 @@ typedef struct {
     vDSP_mtransD((double *)matrix.bytes, 1, &features[numExamples], 1, numFeatures, numExamples);
     
     // Forward propagation algorithm
-    for (int j = 0; j < self.numberOfLayers - 1; j++) {
+    for (int layer_index = 0; layer_index < self.numberOfLayers - 1; layer_index++) {
+        if ([_layersTypes[layer_index] isEqualToNumber:@(MLPLayerBatchNormalization)]) {
+            //apply BN per example
+            for (int example_index = 0; example_index < numExamples; ++example_index) {
+                //standartize x = (x - mean) / std
+                double* current_example_features_start = &features[numExamples] + example_index;
+                vDSP_vsubD(layer[layer_index].weightMatrix + 2 * layer[layer_index].ncol, 1,
+                           current_example_features_start, numExamples,
+                           current_example_features_start, numExamples,
+                           layer[layer_index].ncol);
+                vDSP_vdivD(layer[layer_index].weightMatrix + 3 * layer[layer_index].ncol, 1,
+                           current_example_features_start, numExamples,
+                           current_example_features_start, numExamples,
+                           layer[layer_index].ncol);
+                
+                // apply BN compensation x = gamma * x + beta
+                vDSP_vmulD(layer[layer_index].weightMatrix, 1,
+                           current_example_features_start, numExamples,
+                           current_example_features_start, numExamples,
+                           layer[layer_index].ncol);
+                vDSP_vaddD(layer[layer_index].weightMatrix + layer[layer_index].ncol, 1,
+                           current_example_features_start, numExamples,
+                           current_example_features_start, numExamples,
+                           layer[layer_index].ncol);
+            }
+        } else if ([_layersTypes[layer_index] isEqualToNumber:@(MLPLayerDense)]) {
+            // 1. Calculate hidden features for current layer j
+            vDSP_mmulD(layer[layer_index].weightMatrix, 1, features, 1, &buf[numExamples],
+                       1, layer[layer_index].nrow, numExamples, layer[layer_index].ncol);
+            
+            // 2. Add the bias unit in row 0 and propagate features to the next level
+            vDSP_vfillD(&bias, &buf[0], 1, numExamples);
+            memcpy(features, buf, (layer[layer_index].nrow + BIAS_UNIT) * numExamples * sizeof(double));
+        }
         
-        // 1. Calculate hidden features for current layer j
-        vDSP_mmulD(layer[j].weightMatrix, 1, features, 1, &buf[numExamples], 1, layer[j].nrow, numExamples, layer[j].ncol);
-        
-        // 2. Add the bias unit in row 0 and propagate features to the next level
-        vDSP_vfillD(&bias, &buf[0], 1, numExamples);
-        
-        memcpy(features, buf, (layer[j].nrow + BIAS_UNIT) * numExamples * sizeof(double));
-        
-        // 3. Apply activation function, e.g. logistic func: http://en.wikipedia.org/wiki/Logistic_function
-        if (self.outputMode == MLPClassification) {
-            int feature_len = (int)(layer[j].nrow * numExamples);
+        // 3. Apply activation function
+        if (self.outputMode == MLPClassification && [_layersTypes[layer_index] isEqualToNumber:@(MLPLayerDense)]) {
+            int feature_len = (int)(layer[layer_index].nrow * numExamples);
             double one = 1.0;
             double mone = -1.0;
             double relu_threshold = ReLU_THR;
             
             MLPActivationFunction activation =
-            (j < self.numberOfLayers - 2) ? self.hiddenActivationFunction : self.outputActivationFunction;
+            (layer_index < self.numberOfLayers - 2) ? self.hiddenActivationFunction : self.outputActivationFunction;
             
             switch (activation) {
                 case MLPSigmoid:
@@ -190,16 +295,15 @@ typedef struct {
                     break;
                     
                 case MLPSoftmax: {
-                    // subtract maximum input to avoid overflow.
-                    double max_input = 0;
-                    vDSP_maxvD(&features[numExamples], 1, &max_input, feature_len);
-                    max_input *= -1;
-                    vDSP_vsaddD(&features[numExamples], 1, &max_input, &features[numExamples], 1, feature_len);
-                    
                     vvexp(&features[numExamples], &features[numExamples], &feature_len);
-                    double sum_exp = 0;
-                    vDSP_sveD(&features[numExamples], 1, &sum_exp, feature_len);
-                    vDSP_vsdivD(&features[numExamples], 1, &sum_exp, &features[numExamples], 1, feature_len);
+                    
+                    for (int example_index = 0; example_index < numExamples; ++example_index) {
+                        double* current_example_features_start = &features[numExamples] + example_index;
+                        
+                        double sum_exp = 0;
+                        vDSP_sveD(current_example_features_start, numExamples, &sum_exp, feature_len);
+                        vDSP_vsdivD(current_example_features_start, numExamples, &sum_exp, current_example_features_start, numExamples, feature_len);
+                    }
                     break;
                 }
                 case MLPNone:
@@ -237,6 +341,29 @@ typedef struct {
     
     [networkArch appendFormat:@"%lu", self.predictionVectorSize / sizeof(double)];
     return [NSString stringWithFormat:@"a %@ network with %d weigths", networkArch, numberOfWeights];
+}
+
++ (NSInteger)countWeights:(NSArray *)layerConfig
+               layersTypes:(NSMutableArray*)layersTypes {
+
+    NSAssert(layersTypes.count + 1 == layerConfig.count, @"Found inconsistency in layers shapes and layers types");
+    
+    NSInteger count = 0;
+    for (int layer_index = 0; layer_index < layerConfig.count - 1; layer_index++) {
+        if ([layersTypes[layer_index] isEqualToNumber:@(MLPLayerDense)]) {
+                count += ([layerConfig[layer_index] unsignedIntValue] + 1) * [layerConfig[layer_index + 1] unsignedIntValue];
+        } else if ([layersTypes[layer_index] isEqualToNumber:@(MLPLayerBatchNormalization)]) {
+                count += 4 * [layerConfig[layer_index] unsignedIntValue];
+        } else {
+
+                NSString* error = [NSString stringWithFormat:@"Unsupported layer identifyer. Got: %@",
+                                   layersTypes[layer_index]];
+                NSAssert(false, error);
+                break;
+        }
+    }
+    
+    return count;
 }
 
 + (NSInteger)countWeights:(NSArray *)layerConfig {
