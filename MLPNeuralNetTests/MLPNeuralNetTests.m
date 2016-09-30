@@ -46,6 +46,11 @@
     NSArray *layersForReLUSoftmaxModel;
     MLPNeuralNet *modelWithReLUSoftmax;
     
+    NSData *wtsForModelWithBatchNorm;
+    NSArray *layersForModelWithBatchNorm;
+    NSMutableArray *layerTypesForModelWithBatchNorm;
+    MLPNeuralNet *modelForModelWithBatchNorm;
+    
     NSData *vector;
     NSMutableData *prediction;
     double *assessment;
@@ -118,9 +123,10 @@
     modelWithReLUSig.hiddenActivationFunction = MLPReLU;
     modelWithReLUSig.outputActivationFunction = MLPSigmoid;
     
-    double wtsForeLUSoftmax[] = {0.0, 1.1093217, -0.29420424, 0.0, 0.40102676, 0.048761927,
-                                 0.0, 0.18262321, 0.16701823, 0.0, -0.014809706, 0.81076205};
-    wtsForReLUSoftmaxModel = [NSData dataWithBytes:wtsForeLUSoftmax length:sizeof(wtsForeLUSoftmax)];
+    double wtsForReLUSoftmax[] = {-0.00333056, -0.29518637,  0.26010591,  0.00627716, -0.63008577,
+                                   0.5226832 ,  0.02341191,  0.89141166, -0.66637737, -0.02341191,
+                                  -0.19588685, -0.01236533};
+    wtsForReLUSoftmaxModel = [NSData dataWithBytes:wtsForReLUSoftmax length:sizeof(wtsForReLUSoftmax)];
     layersForReLUSoftmaxModel = [NSArray arrayWithObjects:@2, @2, @2, nil];
     modelWithReLUSoftmax = [[MLPNeuralNet alloc] initWithLayerConfig:layersForReLUSoftmaxModel
                                                              weights:wtsForReLUSoftmaxModel
@@ -128,6 +134,25 @@
     modelWithReLUSoftmax.hiddenActivationFunction = MLPReLU;
     modelWithReLUSoftmax.outputActivationFunction = MLPSoftmax;
 
+    double wtsForModelWithBN[] = {-0.02911046,  0.96149528, -0.30875102, -0.07312316, -0.53453773,
+                                  -0.95400345, -0.04936157, -0.60033119,  1.01297891,  0.8972764 ,
+                                   0.91061068,  0.95709789,  0.0074056 ,  0.00735936, -0.00107296,
+                                   0.38664621,  0.41322696,  0.35796061,  0.53616369,  0.51914299,
+                                   0.56763041,  0.00775698,  0.4242098 ,  0.59139675, -0.1122655 ,
+                                  -0.00775698, -0.75524676, -0.39608201, -0.15460265};
+    
+    wtsForModelWithBatchNorm = [NSData dataWithBytes:wtsForModelWithBN length:sizeof(wtsForModelWithBN)];
+    // 2 = input shape; 3 = #neurons in dense layer; 3 = BatchNorm shape; 2 = output shape
+    layersForModelWithBatchNorm = [NSArray arrayWithObjects:@2, @3, @3, @2, nil];
+    layerTypesForModelWithBatchNorm = [NSMutableArray arrayWithObjects:@(MLPLayerDense), @(MLPLayerBatchNormalization), @(MLPLayerDense), nil];
+    modelForModelWithBatchNorm = [[MLPNeuralNet alloc] initWithLayerConfigAndLayerType:layersForModelWithBatchNorm
+                                                                               weights:wtsForModelWithBatchNorm
+                                                                            layerTypes:layerTypesForModelWithBatchNorm
+                                                                            outputMode:MLPClassification];
+    modelForModelWithBatchNorm.hiddenActivationFunction = MLPReLU;
+    modelForModelWithBatchNorm.outputActivationFunction = MLPSoftmax;
+
+    
     double features[] = {
         1, 1,
         1, 0,
@@ -344,7 +369,14 @@
 
 - (void)testNumberOfWeigthsByLayerConfig {
     NSArray *cfg = @[@2, @3, @2, @1];
-    XCTAssertEqual([MLPNeuralNet countWeights:cfg], (NSInteger)20);
+    NSMutableArray *layer_types = [NSMutableArray arrayWithObjects:@(MLPLayerDense), @(MLPLayerDense), @(MLPLayerDense), nil];
+    XCTAssertEqual([MLPNeuralNet countWeights:cfg
+                                  layersTypes:layer_types], (NSInteger)20);
+    
+    NSArray *cfg2 = @[@2, @3, @2, @1];
+    NSMutableArray *layer_types2 = [NSMutableArray arrayWithObjects:@(MLPLayerDense), @(MLPLayerBatchNormalization), @(MLPLayerDense), nil];
+    XCTAssertEqual([MLPNeuralNet countWeights:cfg2
+                                  layersTypes:layer_types2], (NSInteger)24);
 }
 
 #pragma mark - Exception tests
@@ -377,15 +409,26 @@
 
 - (void)testSoftmaxOutputLayer {
     double features[] = {-1, 10};
-    vector = [NSData dataWithBytes:features length:sizeof(features)];
     
-    NSMutableData* predictionM2 = [NSMutableData dataWithLength:sizeof(double)*2];
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    NSMutableData* predictionM2 = [NSMutableData dataWithLength:sizeof(double) * 2];
     double* assessmentM2 = (double *)predictionM2.bytes;
     
     [modelWithReLUSoftmax predictByFeatureMatrix:vector intoPredictionMatrix:predictionM2];
-    XCTAssertEqualWithAccuracy(assessmentM2[0], 0.48606774, 0.0001);
-    XCTAssertEqualWithAccuracy(assessmentM2[1], 0.51393223, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM2[0], 0.3447236, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM2[1], 0.6552764, 0.0001);
+}
 
+-(void)testBatchNormalizationLayer {
+    double features[] = {-1, 10};
+    vector = [NSData dataWithBytes:features length:sizeof(features)];
+    
+    NSMutableData* predictionM2 = [NSMutableData dataWithLength:sizeof(double) * 2];
+    double* assessmentM2 = (double *)predictionM2.bytes;
+    
+    [modelForModelWithBatchNorm predictByFeatureMatrix:vector intoPredictionMatrix:predictionM2];
+    XCTAssertEqualWithAccuracy(assessmentM2[0], 0.32947651, 0.0001);
+    XCTAssertEqualWithAccuracy(assessmentM2[1], 0.67052352, 0.0001);
 }
 
 @end
